@@ -31,6 +31,10 @@ def login_post():
     login_user(user, remember=remember)
     return redirect(url_for('main.profile'))
 
+@auth.route('/forgotPassword')
+def forgotPassword():
+    return render_template('forgotPassword.html')
+
 
 @auth.route('/signup')
 def signup():
