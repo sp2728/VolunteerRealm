@@ -5,64 +5,86 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
     <title>Volunteer Realm</title>
-
+    <style>
+        .index{
+            padding-top:20em;
+        }
+        .login{
+            width:30em;
+            margin-top:10em ;
+            margin-left:18em ;
+        }
+    </style>
+</head>
 
 <body>
-    <section class="hero is-primary is-fullheight">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-     <div class="carousel-inner">
-      <div class="item active">
-        <img src="{{url_for('static', filename='volunteer.jpg')}}" align="left" height="100"/>
-        <div class="carousel-caption">
-          <h3>…</h3>
-          <p>…</p>
-        </div>
-      </div>
-     </div>
-        <!---<img src="{{url_for('static', filename='volunteer.jpg')}}" align="left" height="100"/>--->
-        <div>
-            <div class="navbar navbar-default navbar-static-top" role="navigation">
 
-                    <div id class="navbar-menu">
-                        <div class="navbar-end">
-                            <a href="{{ url_for('main.index') }}" class="navbar-item">
-                                <p style="color:darkmagenta;"><i>HOME</i></p>
-                            </a>
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('main.profile') }}" class="navbar-item">
-                                <p style="color:darkmagenta;"><i>PROFILE</i></p>
-                            </a>
-                            {% endif %}
-                            {% if not current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.login') }}" class="navbar-item">
-                                <p style="color:darkmagenta;"><i>LOGIN</i></p>
-                            </a>
-                            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
-                                <p style="color:darkmagenta;"><i>SIGNUP</i></p>
-                            </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                                <p style="color:darkmagenta;"><i>LOGOUT</i></p>
-                            </a>
-                            {% endif %}
-                        </div>
-                    </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <a class="navbar-brand" href="/">
+        <img src="{{url_for('static', filename='volunteer.jpg')}}" height="50"/><span> Volunteer Realm</span>
+    </a>
 
-            </div>
-        </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div>
-            <div class="container has-text-centered">
-               {% block content %}
-               {% endblock %}
-            </div>
-        </div>
-    </section>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a href="{{ url_for('main.index') }}" class="navbar-brand">
+                    <p style="color:darkmagenta;"><i>HOME</i></p>
+                </a>
+            </li>
+            <li>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('main.profile') }}" class="navbar-brand">
+                    <p style="color:darkmagenta;"><i>PROFILE</i></p>
+                </a>
+                {% endif %}
+            </li>
+            <li>
+                {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('auth.login') }}" class="navbar-brand">
+                    <p style="color:darkmagenta;"><i>LOGIN</i></p>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.signup') }}" class="navbar-brand">
+                    <p style="color:darkmagenta;"><i>SIGNUP</i></p>
+                </a>
+                {% endif %}
+            </li>
+            <li>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('auth.logout') }}" class="navbar-brand">
+                    <p style="color:darkmagenta;"><i>LOGOUT</i></p>
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div>
+    <div class="">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
 </body>
 
 </html>
