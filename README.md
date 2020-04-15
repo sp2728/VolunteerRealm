@@ -1,6 +1,6 @@
 # VolunteerRealm
 
-## Team Members: Sai Kiran Pocham, Varsha Ahuja, Jinal Shah, Yahya Mohammed
+## Team Members: Sai Kiran Pocham, Varsha Ahuja, Jinal Kalpesh Shah, Yahya Mohammed
 
 ### "VolunteerRealm.com" is a website where people can create their profile mentioning their volunteering experiences if any and can connect with organizations having volunteering opportunities. The volunteers can edit/delete their profiles. Only the admin would have the options of editing anything on the website.
 
