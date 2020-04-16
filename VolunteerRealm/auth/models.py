@@ -1,6 +1,6 @@
 import enum
 from flask_login import UserMixin
-from VolunteerRealm.app import db
+from app import db
 
 
 class Permission(enum.Enum):
@@ -14,7 +14,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(64))
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
-    phone_number = db.Column(db.Integer, unique=True)
+    phone_number = db.Column(db.String(15), unique=True)
     gender = db.Column(db.String(10))
     permission = db.Column(db.Enum(Permission), default=Permission.USER)
 
