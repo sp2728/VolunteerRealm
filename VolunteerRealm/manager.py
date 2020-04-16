@@ -1,6 +1,6 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from VolunteerRealm.setup import app,db
+from setup import app,db
 
 app.config['SECRET_KEY'] = 'change_me_to_something_else'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'

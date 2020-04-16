@@ -27,9 +27,9 @@ def register_extensions(app):
 
 def register_blueprints(app):
 
-    from .auth.models import User
-    from .auth.auth import auth as auth_blueprint
-    from .core.main import main as main_blueprint
+    from auth.models import User
+    from auth.auth import auth as auth_blueprint
+    from core.main import main as main_blueprint
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -44,12 +44,12 @@ def setup_database(app):
 
         db.create_all()
         _admins = ('SaiKiran@gmail.com', 'va123@gmail.com', 'jinalshah542@gmail.com','voluteeradmin@gmail.com')
-        from .auth.models import User, Permission
+        from auth.models import User, Permission
         user = User.query.filter_by(name="System").first()
         if user is None:
             password = 'password'
             user = User(email="voluteeradmin@gmail.com",name="System",password=generate_password_hash(password,method='sha256'),first_name='first_name',last_name='last_name',phone_number='43123',gender='Male',permission=Permission.USER)
-            db.session.add(user);
+            db.session.add(user)
             db.session.commit()
 
         users = User.query.filter(User.email.in_(_admins)).all()
@@ -61,3 +61,4 @@ def setup_database(app):
 if __name__ == "__main__":
     app = create_app()
     setup_database(app)
+    app.run(debug=True)
