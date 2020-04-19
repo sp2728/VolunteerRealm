@@ -7,7 +7,7 @@ from flask_mail import Mail
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
-mail= Mail()
+mail = Mail()
 
 mail_settings = {
     "MAIL_SERVER": 'smtp.gmail.com',
@@ -62,7 +62,7 @@ def setup_database(app):
         if user is None:
             print('Creating system user')
             password = 'password'
-            user = User(email="voluteeradmin12@gmail.com",name="System2",password=generate_password_hash(password,method='sha256'),first_name='first_name',last_name='last_name',phone_number='4331123',gender='Male',permission=Permission.USER)
+            user = User(email="voluteeradmin12@gmail.com", name="System2", password=generate_password_hash(password, method='sha256'), first_name='first_name', last_name='last_name', phone_number='4331123', gender='Male', permission=Permission.USER)
             db.session.add(user)
             db.session.commit()
 

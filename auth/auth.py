@@ -16,11 +16,11 @@ def login():
 @auth.route('/login', methods=['POST'])
 def login_post():
     # login code goes here
-    email = request.form.get('email')
+    username = request.form.get('name')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(name=username).first()
 
     # check if user actually exists
     # take the user supplied password, hash it, and compare it to the hashed password in database
@@ -32,21 +32,22 @@ def login_post():
     login_user(user, remember=remember)
     return redirect(url_for('main.profile'))
 
+
 @auth.route('/forgotUsername')
 def forgotUsername():
     return render_template('forgotUsername.html')
 
 
-@auth.route('/forgotUsername' , methods=['POST'])
+@auth.route('/forgotUsername', methods=['POST'])
 def forgotUsername_post():
     email = request.form.get('email')
     user = User.query.filter_by(email=email).first()
-    test ="Your account username is"+ user.name
+    test = "Your account username is" + user.name
     if user:
         msg = Message(subject="Hello",
-                  sender=mail_settings["MAIL_USERNAME"],
-                  recipients=[email],  # replace with your email for testing
-                  body=test
+                      sender=mail_settings["MAIL_USERNAME"],
+                      recipients=[email],  # replace with your email for testing
+                      body=test
                       )
         mail.send(msg)
 
@@ -56,20 +57,23 @@ def forgotUsername_post():
         flash('Email Id is invalid')
         return redirect(url_for('auth.forgotUsername'))
 
+
 @auth.route('/forgotPassword')
 def forgotPassword():
     return render_template('forgotPassword.html')
 
-@auth.route('/forgotPassword' , methods=['POST'])
+
+@auth.route('/forgotPassword', methods=['POST'])
 def forgotPassword_post():
     email = request.form.get('email')
     user = User.query.filter_by(email=email).first()
-    test ="Please reset your password using the following link"+ 'http://127.0.0.1:5000/resetPassword/'+ str(user.id)
+    test = "Please reset your password using the following link " + 'http://127.0.0.1:5000/resetPassword/' + str(
+        user.id)
     if user:
         msg = Message(subject="Hello",
-                  sender=mail_settings["MAIL_USERNAME"],
-                  recipients=[email],  # replace with your email for testing
-                  body=test
+                      sender=mail_settings["MAIL_USERNAME"],
+                      recipients=[email],  # replace with your email for testing
+                      body=test
                       )
         mail.send(msg)
 
@@ -79,22 +83,24 @@ def forgotPassword_post():
         flash('Email Id is invalid')
         return redirect(url_for('auth.forgotPassword'))
 
+
 @auth.route('/resetPassword/<id>')
 def resetPassword(id):
     return render_template('resetPassword.html', id=id)
 
-@auth.route('/resetPassword',methods=['POST'])
+
+@auth.route('/resetPassword', methods=['POST'])
 def resetPassword_post():
-    newPassword=request.form.get('newPassword')
-    confirmPassword=request.form.get('confirmPassword')
-    id= request.form.get('id')
-    if(newPassword!=confirmPassword):
+    newPassword = request.form.get('newPassword')
+    confirmPassword = request.form.get('confirmPassword')
+    id = request.form.get('id')
+    if (newPassword != confirmPassword):
         flash('Both the passwords should be same')
         return render_template('resetPassword.html', id=id)
 
     else:
         user = User.query.filter_by(id=id).first()
-        user.password= generate_password_hash(confirmPassword,method='sha256')
+        user.password = generate_password_hash(confirmPassword, method='sha256')
         return redirect(url_for('auth.login'))
 
 
@@ -107,22 +113,44 @@ def signup():
 def signup_post():
     # code to validate and add user to database goes here
     email = request.form.get('email')
-    name = request.form.get('name')
+    username = request.form.get('name')
     password = request.form.get('password')
+    password2 = request.form.get('password2')
     first_name = request.form.get('FirstName')
     last_name = request.form.get('LastName')
     phone_number = request.form.get('PhoneNumber')
     gender = request.form.get('gender')
-    
-    user = User.query.filter_by(
-        email=email).first()  # if this returns a user, then the email already exists in database
+
+    user = User.query.filter_by(name=username).first()  # if this returns a user, then the username already exists in
+    # database
 
     if user:  # if a user is found, we want to redirect back to signup page so user can try again
-        flash('Email address already exists')
+        flash('Sorry! Username already exists')
+        return redirect(url_for('auth.signup'))
+
+    email1 = User.query.filter_by(email=email).first()  # if this returns a user, then the email already exists in
+    # database
+
+    if email1:  # if a user is found, we want to redirect back to signup page so user can try again
+        flash('Sorry! Email already exists')
+        return redirect(url_for('auth.signup'))
+
+    phone = User.query.filter_by(phone_number=phone_number).first()  # if this returns a user, then the email already exists in
+    # database
+
+    if phone:  # if a user is found, we want to redirect back to signup page so user can try again
+        flash('Sorry! Phone Number already exists')
+        return redirect(url_for('auth.signup'))
+
+    if password2 != password:  # if password & confirm password does not match then we want to redirect to signup page
+        # so user can update the same
+        flash('Password and Confirm Password does not match')
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
-    new_user = User(email=email,name=name,password=generate_password_hash(password,method='sha256'),first_name=first_name,last_name=last_name,phone_number=phone_number,gender=gender,permission=Permission.USER)
+    new_user = User(email=email, name=username, password=generate_password_hash(password, method='sha256'),
+                    first_name=first_name, last_name=last_name, phone_number=phone_number, gender=gender,
+                    permission=Permission.USER)
 
     # add the new user to the database
     db.session.add(new_user)
