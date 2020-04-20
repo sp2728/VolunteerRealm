@@ -94,6 +94,7 @@ def resetPassword_post():
     newPassword = request.form.get('newPassword')
     confirmPassword = request.form.get('confirmPassword')
     id = request.form.get('id')
+    print(id)
     if (newPassword != confirmPassword):
         flash('Both the passwords should be same')
         return render_template('resetPassword.html', id=id)
@@ -101,6 +102,7 @@ def resetPassword_post():
     else:
         user = User.query.filter_by(id=id).first()
         user.password = generate_password_hash(confirmPassword, method='sha256')
+        db.session.commit()
         return redirect(url_for('auth.login'))
 
 
