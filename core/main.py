@@ -13,3 +13,11 @@ def index():
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
+
+@main.route('/organisationList')
+def organisationList():
+    return render_template('organisationList.html')
+
+@main.route('/viewOppurtunities')
+def viewOppurtunities():
+    return render_template('viewOppurtunities.html')
