@@ -20,3 +20,9 @@ class User(UserMixin, db.Model):
     gender = db.Column(db.String(10))
     permission = db.Column(db.Enum(Permission), default=Permission.USER)
 
+    def is_admin(self):
+        return self.permission == Permission.ADMIN
+
+    def is_none(self):
+        return self.permission == Permission.NONE
+

@@ -1,6 +1,8 @@
-from flask import Flask
+import functools
+
+from flask import Flask, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from werkzeug.security import generate_password_hash
 from flask_mail import Mail
 # init SQLAlchemy so we can use it later in our models
@@ -17,6 +19,8 @@ mail_settings = {
     "MAIL_USERNAME": 'volunteerrealm@gmail.com',
     "MAIL_PASSWORD": 'volunteerRealm123'
 }
+
+
 
 def create_app():
     app = Flask(__name__)
@@ -60,7 +64,7 @@ def setup_database(app):
         from auth.models import User, Permission
 
         db.create_all()
-        _admins = ["voluteeradmin1223@gmail.com"]
+        _admins = ["voluteeradmin1223@gmail.com", "varsha13ahuja@gmail.com", "saikiran1298@gmail.com"]
         print("init db, setting up users/admins")
 
         user = User.query.filter_by(name="System3").first()

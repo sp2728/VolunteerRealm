@@ -18,13 +18,14 @@
             crossorigin="anonymous"></script>
     <title>Volunteer Realm</title>
     <style>
-        .index{
-            padding-top:20em;
+        .index {
+            padding-top: 20em;
         }
-        .login{
-            width:30em;
-            margin-top:10em ;
-            margin-left:18em ;
+
+        .login {
+            width: 30em;
+            margin-top: 10em;
+            margin-left: 18em;
         }
     </style>
 </head>
@@ -32,9 +33,23 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <a class="navbar-brand" href="/">
-        <img src="{{url_for('static', filename='volunteer.jpg')}}" height="50"/><span> Volunteer Realm</span>
-    </a>
+    {% if current_user.is_authenticated and current_user.is_admin() %}
+        <a class="navbar-brand" href="/adminDashboard">
+            <img src="{{ url_for('static', filename='volunteer.jpg') }}" height="50"/><span> Volunteer Realm</span>
+        </a>
+    {% endif %}
+
+    {% if current_user.is_authenticated and not current_user.is_admin() %}
+        <a class="navbar-brand" href="/userDashboard">
+            <img src="{{ url_for('static', filename='volunteer.jpg') }}" height="50"/><span> Volunteer Realm</span>
+        </a>
+    {% endif %}
+
+    {% if not current_user.is_authenticated %}
+        <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static', filename='volunteer.jpg') }}" height="50"/><span> Volunteer Realm</span>
+        </a>
+    {% endif %}
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,28 +66,28 @@
             </li>
             <li>
                 {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main.profile') }}" class="navbar-brand">
-                    <p style="color:darkmagenta;"><i>PROFILE</i></p>
-                </a>
+                    <a href="{{ url_for('main.profile') }}" class="navbar-brand">
+                        <p style="color:darkmagenta;"><i>PROFILE</i></p>
+                    </a>
                 {% endif %}
             </li>
             <li>
                 {% if not current_user.is_authenticated %}
-                <a href="{{ url_for('auth.login') }}" class="navbar-brand">
-                    <p style="color:darkmagenta;"><i>LOGIN</i></p>
-                </a>
-            </li>
-            <li>
-                <a href="{{ url_for('auth.signup') }}" class="navbar-brand">
-                    <p style="color:darkmagenta;"><i>SIGNUP</i></p>
-                </a>
+                    <a href="{{ url_for('auth.login') }}" class="navbar-brand">
+                        <p style="color:darkmagenta;"><i>LOGIN</i></p>
+                    </a>
+                    </li>
+                    <li>
+                    <a href="{{ url_for('auth.signup') }}" class="navbar-brand">
+                        <p style="color:darkmagenta;"><i>SIGNUP</i></p>
+                    </a>
                 {% endif %}
-            </li>
+                </li>
             <li>
                 {% if current_user.is_authenticated %}
-                <a href="{{ url_for('auth.logout') }}" class="navbar-brand">
-                    <p style="color:darkmagenta;"><i>LOGOUT</i></p>
-                </a>
+                    <a href="{{ url_for('auth.logout') }}" class="navbar-brand">
+                        <p style="color:darkmagenta;"><i>LOGOUT</i></p>
+                    </a>
                 {% endif %}
             </li>
         </ul>
