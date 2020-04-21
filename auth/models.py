@@ -6,11 +6,11 @@ from app import db
 class Permission(enum.Enum):
     ADMIN = 1
     USER = 2
-    NONE = 10 # can be used to disable users
+    NONE = 10  # can be used to disable users
 
 
 class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(64), unique=True)
@@ -26,3 +26,25 @@ class User(UserMixin, db.Model):
     def is_none(self):
         return self.permission == Permission.NONE
 
+
+class Organization(db.Model):
+    org_id = db.Column(db.Integer, primary_key=True)
+    org_name = db.Column(db.String(100), unique=True)
+
+
+class Jobs(db.Model):
+    job_id = db.Column(db.Integer, primary_key=True)
+    job_title = db.Column(db.String(100))
+    job_description = db.Column(db.String(2000))
+
+
+class OrgJobs(db.Model):
+    orgJob_id = db.Column(db.Integer, primary_key=True)
+    org_id = db.Column(db.Integer, foreign_key=True)
+    job_id = db.Column(db.Integer, foreign_key=True)
+
+
+class UserOrgJobs(db.Model):
+    uoj_id = db.Column(db.Integer, primary_key=True)
+    orgJob_id = db.Column(db.Integer, foreign_key=True)
+    id = db.Column(db.Integer, foreign_Key=True)

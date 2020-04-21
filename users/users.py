@@ -13,12 +13,22 @@ def userDashboard():
 def editUser():
     return render_template('editUser.html')
 
-@user.route('/deleteUser')
+@user.route('/userProfile')
 @login_required
-def deleteUser():
-    return render_template('userList.html')
+def userProfile():
+    return render_template('userProfile.html')
 
-@user.route('/applyOppurtunity')
+@user.route('/applyOpportunity')
 @login_required
 def applyOppurtunity():
-    return render_template('applyOppurtunity.html')
+    return render_template('applyOpportunity.html')
+
+@user.route('/volunteeringHistory')
+@login_required
+def volunteeringHistory():
+    return render_template('volunteeringHistory.html')
+
+@user.route('/contact')
+@login_required
+def contact():
+    return render_template('contact.html')
