@@ -40,11 +40,11 @@ class Jobs(db.Model):
 
 class OrgJobs(db.Model):
     orgJob_id = db.Column(db.Integer, primary_key=True)
-    org_id = db.Column(db.Integer, foreign_key=True)
-    job_id = db.Column(db.Integer, foreign_key=True)
+    org_id = db.Column(db.Integer, db.ForeignKey('organization.org_id'))
+    job_id = db.Column(db.Integer, db.ForeignKey('jobs.job_id'))
 
 
 class UserOrgJobs(db.Model):
     uoj_id = db.Column(db.Integer, primary_key=True)
-    orgJob_id = db.Column(db.Integer, foreign_key=True)
-    id = db.Column(db.Integer, foreign_Key=True)
+    orgJob_id = db.Column(db.Integer, db.ForeignKey('org_jobs.orgJob_id'))
+    id = db.Column(db.Integer, db.ForeignKey('User.id'))
