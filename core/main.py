@@ -9,9 +9,9 @@ def index():
     return render_template('index.html')
 
 
-@main.route('/organisationList')
-def organisationList():
-    return render_template('organisationList.html')
+@main.route('/organizationList')
+def organizationList():
+    return render_template('organizationList.html')
 
 
 @main.route('/viewOpportunities')

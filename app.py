@@ -74,7 +74,7 @@ def setup_database(app):
         from auth.models import User, Permission
 
         db.create_all()
-        _admins = ["voluteeradmin1223@gmail.com", "varsha13ahuja@gmail.com", "saikiran1298@gmail.com"]
+        _admins = ["voluteeradmin1223@gmail.com", "varshaahuja13@gmail.com", "saikiran1298@gmail.com"]
         print("init db, setting up users/admins")
 
         user = User.query.filter_by(name="System3").first()

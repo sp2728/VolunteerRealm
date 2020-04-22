@@ -27,27 +27,22 @@ class User(UserMixin, db.Model):
         return self.permission == Permission.NONE
 
 
-class Organisation(db.Model):
+class Organization(db.Model):
     org_id = db.Column(db.Integer, primary_key=True)
     org_name = db.Column(db.String(100), unique=True)
-    org_address= db.Column(db.String(100))
+    org_address = db.Column(db.String(100))
 
 
-class Jobs(db.Model):
-    job_id = db.Column(db.Integer, primary_key=True)
-    job_title = db.Column(db.String(100))
-    job_description = db.Column(db.String(2000))
-    '''job_location = db.column(db.String(100))'''
-
-'''
 class OrgJobs(db.Model):
     orgJob_id = db.Column(db.Integer, primary_key=True)
     org_id = db.Column(db.Integer, db.ForeignKey('organization.org_id'))
-    job_id = db.Column(db.Integer, db.ForeignKey('jobs.job_id'))
+    job_id = db.Column(db.Integer, unique=True)
+    job_title = db.Column(db.String(100))
+    job_description = db.Column(db.String(2000))
+    job_location = db.Column(db.String(100))
 
 
 class UserOrgJobs(db.Model):
     uoj_id = db.Column(db.Integer, primary_key=True)
     orgJob_id = db.Column(db.Integer, db.ForeignKey('org_jobs.orgJob_id'))
-    id = db.Column(db.Integer, db.ForeignKey('User.id'))
-'''
+    id = db.Column(db.Integer, db.ForeignKey('user.id'))

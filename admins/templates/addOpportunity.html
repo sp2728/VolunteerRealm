@@ -6,7 +6,7 @@
 
             <div class="card-body">
                 <div class="form-group">
-                    <div class="h4">Enter Oppurtunity Details</div>
+                    <div class="h4">Enter Opportunity Details</div>
                 </div>
                 <hr>
 
@@ -18,7 +18,19 @@
                     {% endif %}
                 {% endwith %}
 
-                <form method="POST" action="/addOppurtunity">
+                <form method="POST" action="/addOpportunity">
+
+                    <div class="form-group">
+                        <label>Job Id </label>
+                        <input class="form-control" type="text" name="jobId" placeholder="Job Id"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Organization Id </label>
+                        <input class="form-control" type="text" name="orgId" placeholder="Organization Id"
+                               autofocus="">
+                    </div>
 
                     <div class="form-group">
                         <label>Job Title </label>
@@ -30,6 +42,12 @@
                         <label>Job Description</label>
                         <input class="form-control" type="text" name="jobDescription"
                                placeholder="Enter Job Description"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Location </label>
+                        <input class="form-control" type="text" name="jobLocation" placeholder="Job Location"
                                autofocus="">
                     </div>
 
