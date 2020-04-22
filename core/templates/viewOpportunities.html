@@ -5,12 +5,21 @@
     <div class="container-fluid">
 
         <h1 class="title text-center">
-            org list
+            Opportunities
         </h1>
-
-
-
-
+    <hr>
+    {% for job in orgJobs %}
+        <div class="row m-2 border">
+        <div class="col">
+            <h3>{{ job.job_title }}</h3>
+            <p><strong>Job Description: </strong>{{ job.job_description }}</p>
+            <p><strong>Location: </strong>{{ job.job_location }}</p>
+        </div>
+            <div class="col-4 text-center pt-4">
+                <button class="btn btn-primary" action="/applyOpportunity/" + job.orgJob_id> Apply Now</button>
+            </div>
+        </div>
+    {% endfor %}
     </div>
 
 {% endblock %}

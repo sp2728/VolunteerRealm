@@ -71,7 +71,7 @@ def addOpportunity_post():
     jobLocation = request.form.get('jobLocation')
     print(jobTitle, jobDescription)
 
-    opporgId = Organization.query.filter_by(org_id=orgId).first()
+    opporgId != Organization.query.filter_by(org_id=orgId).first()
 
     if opporgId:
         new_job = OrgJobs(job_id=jobId, org_id=orgId, job_title=jobTitle, job_description=jobDescription,

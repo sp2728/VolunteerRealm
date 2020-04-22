@@ -17,6 +17,7 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
     phone_number = db.Column(db.String(15), unique=True)
+    linkedIn = db.Column(db.String(100))
     gender = db.Column(db.String(10))
     permission = db.Column(db.Enum(Permission), default=Permission.USER)
 

@@ -1,19 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="row">
-        <div class="col-2">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-        </div>
-        <div class="col-8 index">
-            <h1 class="title">
-                Welcome to Volunteer Realm, <span class="text-danger">{{ name }}!</span>
-            </h1>
-        </div>
-        <div class="col-2">
+    <script>$('#myTab a').on('click', function (e) {
+  e.preventDefault()
+  $(this).tab('url')
+})</script>
 
-        </div>
-    </div>
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link  active" href={{ url_for('user.userProfile') }} role="tab" data-toggle="tab" aria-selected="true">profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">buzz</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#references" role="tab" data-toggle="tab">references</a>
+        </li>
+    </ul>
+
 
 
 {% endblock %}

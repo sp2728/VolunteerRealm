@@ -121,6 +121,7 @@ def signup_post():
     first_name = request.form.get('FirstName')
     last_name = request.form.get('LastName')
     phone_number = request.form.get('PhoneNumber')
+    linkedIn = request.form.get('linkedIn')
     gender = request.form.get('gender')
 
     user = User.query.filter_by(name=username).first()  # if this returns a user, then the username already exists in
@@ -151,7 +152,7 @@ def signup_post():
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
     new_user = User(email=email, name=username, password=generate_password_hash(password, method='sha256'),
-                    first_name=first_name, last_name=last_name, phone_number=phone_number, gender=gender,
+                    first_name=first_name, last_name=last_name, phone_number=phone_number, gender=gender, linkedIn=linkedIn,
                     permission=Permission.USER)
 
     # add the new user to the database
