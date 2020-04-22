@@ -41,4 +41,4 @@ def applyOppurtunity(id):
                   )
     mail.send(msg)
 
-    return render_template('main.viewOpportunities')
+    return redirect(url_for('main.viewOpportunities'))

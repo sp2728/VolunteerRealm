@@ -16,7 +16,7 @@
             <p><strong>Location: </strong>{{ job.job_location }}</p>
         </div>
             <div class="col-4 text-center pt-4">
-                <button class="btn btn-primary" action="/applyOpportunity/" + job.orgJob_id> Apply Now</button>
+                <a class="btn btn-primary" href="/applyOpportunity/{{ job.orgJob_id }}"> Apply Now</a>
             </div>
         </div>
     {% endfor %}
