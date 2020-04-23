@@ -40,6 +40,7 @@ def addOrganization():
 def addOrganization_post():
     organizationName = request.form.get('organizationName')
     organizationAddress = request.form.get('organizationAddress')
+    organizationEmail = request.form.get('email')
     print(organizationName, organizationAddress)
 
     org_name = Organization.query.filter_by(org_name=organizationName).first()
@@ -47,7 +48,7 @@ def addOrganization_post():
         flash('Organization is already exists')
         return redirect(url_for('admin.addOrganization'))
 
-    new_org = Organization(org_name=organizationName, org_address=organizationAddress)
+    new_org = Organization(org_name=organizationName, org_address=organizationAddress, org_email=organizationEmail)
     db.session.add(new_org)
     db.session.commit()
     return redirect(url_for('main.organizationList'))
@@ -57,7 +58,8 @@ def addOrganization_post():
 @login_required
 @admin_only
 def addOpportunity():
-    return render_template('addOpportunity.html')
+    orgName = Organization.query.all()
+    return render_template('addOpportunity.html', orgName=orgName)
 
 
 @admin.route('/addOpportunity', methods=['POST'])
@@ -65,24 +67,24 @@ def addOpportunity():
 @admin_only
 def addOpportunity_post():
     jobId = request.form.get('jobId')
-    orgId = request.form.get('orgId')
+    orgNm = request.form.get('orgNm')
     jobTitle = request.form.get('jobTitle')
     jobDescription = request.form.get('jobDescription')
     jobLocation = request.form.get('jobLocation')
-    print(jobTitle, jobDescription)
 
-    opporgId != Organization.query.filter_by(org_id=orgId).first()
+    jid = OrgJobs.query.filter_by(job_id=jobId).first()
 
-    if opporgId:
-        new_job = OrgJobs(job_id=jobId, org_id=orgId, job_title=jobTitle, job_description=jobDescription,
-                          job_location=jobLocation)
-        db.session.add(new_job)
-        db.session.commit()
-        return redirect(url_for('main.viewOpportunities'))
-    else:
-        flash('Invalid Organization Id')
+    if jid:
+        flash('Job Id already exists')
         return redirect(url_for('admin.addOpportunity'))
 
+    orgId = db.session.query(Organization.org_id).filter(Organization.org_name == orgNm).first()[0]
+
+    new_job = OrgJobs(job_id=jobId, org_id=orgId, job_title=jobTitle, job_description=jobDescription,
+                      job_location=jobLocation)
+    db.session.add(new_job)
+    db.session.commit()
+    return redirect(url_for('main.viewOpportunities'))
 
 
 @admin.route('/updateOrganization')

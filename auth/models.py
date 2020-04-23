@@ -32,6 +32,7 @@ class Organization(db.Model):
     org_id = db.Column(db.Integer, primary_key=True)
     org_name = db.Column(db.String(100), unique=True)
     org_address = db.Column(db.String(100))
+    org_email = db.Column(db.String(64))
 
 
 class OrgJobs(db.Model):

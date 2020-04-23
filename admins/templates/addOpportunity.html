@@ -27,9 +27,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Organization Id </label>
-                        <input class="form-control" type="text" name="orgId" placeholder="Organization Id"
-                               autofocus="">
+                        <label>Organization Name </label>
+                            <select class="form-control" id="select" name="orgNm" autofocus="">
+                                <option value="">Select Organization Name</option>
+                                    {% for org in orgName %}
+                                     <option value="{{ org.org_name }}">{{ org.org_name }}</option>
+                                    {% endfor %}
+                            </select>
                     </div>
 
                     <div class="form-group">
