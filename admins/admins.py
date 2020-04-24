@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from app import db, admin_only
-from auth.models import Organization, OrgJobs
+from auth.models import Organization, OrgJobs, User
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
@@ -17,8 +17,8 @@ def adminDashboard():
 @login_required
 @admin_only
 def userList():
-    return render_template('userList.html')
-
+    user = User.query.all()
+    return render_template('userList.html', user=user)
 
 @admin.route('/deleteUser')
 @login_required

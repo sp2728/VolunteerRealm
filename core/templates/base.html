@@ -41,19 +41,19 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
     {% if current_user.is_authenticated and current_user.is_admin() %}
         <a class="navbar-brand" href="/adminDashboard">
-            <img src="{{ url_for('static', filename='volunteer.jpg') }}" height="50"/><span> Volunteer Realm</span>
+            <img src="{{ url_for('static', filename='volunteerRealm2.jpg') }}" height="60"/><span> Volunteer Realm</span>
         </a>
     {% endif %}
 
     {% if current_user.is_authenticated and not current_user.is_admin() %}
         <a class="navbar-brand" href="/userDashboard">
-            <img src="{{ url_for('static', filename='volunteer.jpg') }}" height="50"/><span> Volunteer Realm</span>
+            <img src="{{ url_for('static', filename='volunteerRealm2.jpg') }}" height="60"/><span> Volunteer Realm</span>
         </a>
     {% endif %}
 
     {% if not current_user.is_authenticated %}
         <a class="navbar-brand" href="/">
-            <img src="{{ url_for('static', filename='volunteer.jpg') }}" height="50"/><span> Volunteer Realm</span>
+            <img src="{{ url_for('static', filename='volunteerRealm2.jpg') }}" height="60"/><span> Volunteer Realm</span>
         </a>
     {% endif %}
 

@@ -2,6 +2,28 @@
 {% block content %}
 
 
+    <div class="container-fluid">
+
+        <h1 class="title text-center">
+            <i>Candidate Information</i>
+        </h1>
+    <hr>
+        {% for row in user %}
+        <div class="row m-2 border">
+        <div class="col">
+            <h3>{{ row.id }}</h3>
+          <p><strong>ID: </strong>{{ row.id }}</p>
+           <p><strong>Email: </strong>{{ row.email }}</p>
+            <p><strong>Name: </strong>{{ row.name }}</p>
+
+        </div>
+            <div class="col-4 text-center pt-4">
+                <a class="btn btn-primary" href="/deleteUser/{{ user.id }}"> delete</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
 
 
 {% endblock %}

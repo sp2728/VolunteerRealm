@@ -35,3 +35,4 @@ def volunteeringHistory():
 @login_required
 def contact():
     return render_template('contact.html')
+
