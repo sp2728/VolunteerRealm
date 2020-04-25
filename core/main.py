@@ -13,6 +13,7 @@ def index():
     return render_template('index.html')
 
 @main.route('/viewOpportunities')
+@login_required
 def viewOpportunities():
     orgJobs = OrgJobs.query.all()
     return render_template('viewOpportunities.html', orgJobs=orgJobs)
@@ -44,6 +45,7 @@ def applyOppurtunity(id):
     mail.send(msg)
 
     return redirect(url_for('main.viewOpportunities'))
+
 
 @main.route('/organizationList')
 @login_required
