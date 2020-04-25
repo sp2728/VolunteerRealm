@@ -8,22 +8,23 @@
             <i>Candidate Information</i>
         </h1>
     <hr>
+    <table class="table table-striped table-bordered table-sm row-border hover">
+        <tr>
+
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>User Email</th>
+            <th>Action</th>
+        </tr>
+
         {% for row in user %}
-        <div class="row m-2 border">
-        <div class="col">
-            <h3>{{ row.id }}</h3>
-          <p><strong>ID: </strong>{{ row.id }}</p>
-           <p><strong>Email: </strong>{{ row.email }}</p>
-            <p><strong>Name: </strong>{{ row.name }}</p>
+            <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.name}}</td>
+                <td>{{ row.email}}</td>
+                <td><a class="btn btn-primary" href="/deleteUser/{{ user.id }}"> delete</a></td>
+            </tr>
 
-        </div>
-            <div class="col-4 text-center pt-4">
-                <a class="btn btn-primary" href="/deleteUser/{{ user.id }}"> delete</a>
-            </div>
-        </div>
-    {% endfor %}
-    </div>
-
-
-
-{% endblock %}
+        {% endfor %}
+    </table>
+    {% endblock %}

@@ -1,25 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-
-    <div class="container-fluid">
+    <div class="container">
 
         <h1 class="title text-center">
-            Opportunities
+            <i>Opportunity List</i>
         </h1>
     <hr>
-    {% for job in orgJobs %}
-        <div class="row m-2 border">
-        <div class="col">
-            <h3>{{ job.job_title }}</h3>
-            <p><strong>Job Description: </strong>{{ job.job_description }}</p>
-            <p><strong>Location: </strong>{{ job.job_location }}</p>
-        </div>
-            <div class="col-4 text-center pt-4">
-                <a class="btn btn-primary" href="/applyOpportunity/{{ job.orgJob_id }}"> Apply Now</a>
-            </div>
-        </div>
-    {% endfor %}
-    </div>
-
-{% endblock %}
