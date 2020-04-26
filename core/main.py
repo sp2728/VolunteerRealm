@@ -50,3 +50,4 @@ def applyOppurtunity(id):
     mail.send(msg)
 
     return redirect(url_for('main.viewOpportunities'))
+

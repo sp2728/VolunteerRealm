@@ -75,6 +75,7 @@ def setup_database(app):
 
         db.create_all()
         _admins = ["voluteeradmin1223@gmail.com", "varshaahuja13@gmail.com", "saikiran1298@gmail.com", "xyz@gmail.com"]
+
         print("init db, setting up users/admins")
 
         user = User.query.filter_by(name="System3").first()
