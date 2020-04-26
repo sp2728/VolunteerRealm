@@ -1,13 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 
-        <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8 index">
-            <h1 class="title text-center">History</h1>
-        <div>
-    <div>
 
+    <div class="container-fluid">
 
+        <h1 class="title text-center">
+            Applied Opportunities History
+        </h1>
+    <hr>
+    {% for job in orgjobs %}
+        <div class="row m-2 border">
+        <div class="col">
+            <h3>{{ job.job_title }}</h3>
+            <p><strong>Job Description: </strong>{{ job.job_description }}</p>
+            <p><strong>Location: </strong>{{ job.job_location }}</p>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
 
 {% endblock %}
