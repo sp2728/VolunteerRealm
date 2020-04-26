@@ -1,7 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand" href="{{ url_for('admin.addOrganization') }}"><strong>Sink Of Organization</strong></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    
+  </button>
+       <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand" href="{{ url_for('admin.addOpportunity') }}"><strong>Add Opportunity</strong></a><hr>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+  </button>
+           <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand" href="{{ url_for('admin.userList') }}"><strong>Candidate Information</strong></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+  </button>
+
+</nav>
+       </nav>
+    </nav>
+<p style="font-size:48px">
+&#128512; <i>Spread Happiness<i>
+</p> <hr>
+
+    <div class="col-12">
+
+        <p style="background-color:DodgerBlue;"<b>"Volunteers are the only human beings on the face of the earth who reflect this nation's compassion, unselfish caring, patience, and just plain loving one another </b>.”</p>
+    </div>
+    <div class="col-12">
+<hr>
+    <style>
+p {
+ text-align:center
+}
+</style>
 
 
 
 {% endblock %}
+
