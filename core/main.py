@@ -12,13 +12,8 @@ main = Blueprint('main', __name__, template_folder='templates')
 def index():
     return render_template('index.html')
 
-
-@main.route('/organizationList')
-def organizationList():
-    return render_template('organizationList.html')
-
-
 @main.route('/viewOpportunities')
+@login_required
 def viewOpportunities():
     orgJobs = OrgJobs.query.all()
     return render_template('viewOpportunities.html', orgJobs=orgJobs)
@@ -55,3 +50,9 @@ def applyOppurtunity(id):
 
     return redirect(url_for('main.viewOpportunities'))
 
+
+@main.route('/organizationList')
+@login_required
+def organizationList():
+    organization = Organization.query.all()
+    return render_template('organizationList.html', organization=organization)

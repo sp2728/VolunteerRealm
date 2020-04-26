@@ -99,3 +99,4 @@ def updateOrganization():
 @admin_only
 def deleteOrganization():
     return render_template('organizationList.html')
+
