@@ -30,10 +30,7 @@ def userProfile():
 @user.route('/volunteeringHistory')
 @login_required
 def volunteeringHistory():
-    ojid = UserOrgJobs.query.filter_by(id=current_user.id).first()
-    print(ojid)
-    orgjobs = db.session.query(OrgJobs).filter(OrgJobs.orgJob_id == ojid.orgJob_id)
-    print(orgjobs)
+    orgjobs = db.session.query(OrgJobs, UserOrgJobs).filter(OrgJobs.orgJob_id == UserOrgJobs.orgJob_id, UserOrgJobs.id == current_user.id)
     return render_template('volunteeringHistory.html', orgjobs=orgjobs)
 
 

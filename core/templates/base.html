@@ -123,7 +123,7 @@
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link" id="#profile" href="/userProfile">Profile</a>
+                        <a class="nav-link" id="profile" href="/userProfile">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="history" href="/volunteeringHistory">Volunteering History</a>
@@ -141,9 +141,18 @@
 
     <script>
        $(document).ready(function(){
-            $(".nav-tabs a").click(function(){
-                $(this).tab('show')
-           });
+           if (window.location.href.indexOf("contact") !== -1) {
+            $("#contact").addClass("active");
+           }
+           if (window.location.href.indexOf("Profile") !== -1) {
+            $("#profile").addClass("active");
+           }
+           if (window.location.href.indexOf("History") !== -1) {
+            $("#history").addClass("active");
+           }
+           if (window.location.href.indexOf("Opportunities") !== -1) {
+            $("#opportunities").addClass("active");
+           }
        });
     </script>
 {% endif %}

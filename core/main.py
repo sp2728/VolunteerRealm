@@ -33,10 +33,14 @@ def applyOppurtunityTemp():
 @main.route('/applyOpportunity/<id>')
 @login_required
 def applyOppurtunity(id):
-
-    ojid = UserOrgJobs(id=current_user.id, orgJob_id=id)
-    db.session.add(ojid)
-    db.session.commit()
+    jid = db.session.query(UserOrgJobs).filter(UserOrgJobs.id==current_user.id, UserOrgJobs.orgJob_id==id).first()
+    if jid is None:
+        ojid = UserOrgJobs(id=current_user.id, orgJob_id=id)
+        db.session.add(ojid)
+        db.session.commit()
+    else:
+        flash('Already applied')
+        return redirect(url_for('main.viewOpportunities'))
 
     job = OrgJobs.query.filter_by(orgJob_id=id).first()
     org = Organization.query.filter_by(org_id=job.org_id).first()
