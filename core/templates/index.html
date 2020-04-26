@@ -1,20 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-2">
+
+    <div class="container-fluid">
+        <div class="banner mb-3 text-white ">
+            <div class="h1 text-center font-weight-light ">
+                Remarkable Outcomes
+            </div>
+            <div class="sub-heading h5 font-weight-light text-center">
+                VolunteerMatch is the largest network in the nonprofit world, with the most volunteers, nonprofits and
+                opportunities to make a difference.
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row text-center">
+
+                <div class="col">
+                    <a href="/organizationList" class="text-decoration-none text-dark">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="fa icon fa-building text-info mb-3"></i>
+                                <p class="font-weight-bold"> View Organisations</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="/viewOpportunities" class="text-decoration-none text-dark">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="fa icon fa-briefcase text-info mb-3"></i>
+                                <p class="font-weight-bold">View Opportunities</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
 
     </div>
-    <div class="col-8 index">
-        <h1 class="title text-center" >
-            <b>Volunteer Realm</b>
-</h1>
-<h2 class="subtitle" align="center">
-    <i>Volunteers do not necessarily have the time; they just have the heart</i>
-</h2>
-    </div>
-    <div class="col-2">
-
-    </div>
-</div>
 {% endblock %}
