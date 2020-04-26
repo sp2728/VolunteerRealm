@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from auth.models import User, Permission
 from app import db, mail_settings, mail
 from flask_mail import Message
@@ -30,7 +30,7 @@ def login_post():
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
-    return redirect(url_for('main.profile'))
+    return redirect(url_for('admin.adminDashboard'))
 
 
 @auth.route('/forgotUsername')
@@ -42,16 +42,23 @@ def forgotUsername():
 def forgotUsername_post():
     email = request.form.get('email')
     user = User.query.filter_by(email=email).first()
-    test = "Your account username is" + user.name
+
     if user:
-        msg = Message(subject="Hello",
+        msg = Message(subject="Forgot Username",
                       sender=mail_settings["MAIL_USERNAME"],
-                      recipients=[email],  # replace with your email for testing
-                      body=test
+                      recipients=[email]  # replace with your email for testing
                       )
+        msg.html = '''<p>Hello {},</p> 
+                <p>You or someone else has requested to know the username for your account.</p> 
+                <p> Your username is <strong> {}</strong>.</p>
+                <p>If you did not make this request, then you can simply ignore this email.</p>
+
+                <p>Best Wishes,</p>
+                <p>Admin</p>
+                <p>Admin@volunteerrealm.com</p>'''.format(user.first_name, user.name)
         mail.send(msg)
 
-        flash('Reset link has been sent to your Email Id.')
+        flash('Your Username has been sent to your Email Id.')
         return redirect(url_for('auth.login'))
     else:
         flash('Email Id is invalid')
@@ -67,14 +74,21 @@ def forgotPassword():
 def forgotPassword_post():
     email = request.form.get('email')
     user = User.query.filter_by(email=email).first()
-    test = "Please reset your password using the following link " + 'http://127.0.0.1:5000/resetPassword/' + str(
-        user.id)
+
+    link = 'http://127.0.0.1:5000/resetPassword/' + str(user.id)
     if user:
-        msg = Message(subject="Hello",
+        msg = Message(subject="Password Reset Link",
                       sender=mail_settings["MAIL_USERNAME"],
-                      recipients=[email],  # replace with your email for testing
-                      body=test
+                      recipients=[email]  # replace with your email for testing
                       )
+        msg.html = '''<p>Hello {},</p> 
+        <p>You or someone else has requested that a new password be generated for your 
+        account. If you made this request,then please click this link: <a href={}><strong>reset 
+        password</strong></a>. If you did not make this request, then you can simply ignore this email.</p> 
+        
+        <p>Best Wishes,</p>
+        <p>Admin</p>
+        <p>Admin@volunteerrealm.com</p>'''.format(user.first_name, link)
         mail.send(msg)
 
         flash('Reset link has been sent to your Email Id.')
@@ -95,7 +109,7 @@ def resetPassword_post():
     confirmPassword = request.form.get('confirmPassword')
     id = request.form.get('id')
     print(id)
-    if (newPassword != confirmPassword):
+    if newPassword != confirmPassword:
         flash('Both the passwords should be same')
         return render_template('resetPassword.html', id=id)
 
@@ -121,6 +135,7 @@ def signup_post():
     first_name = request.form.get('FirstName')
     last_name = request.form.get('LastName')
     phone_number = request.form.get('PhoneNumber')
+    linkedIn = request.form.get('linkedIn')
     gender = request.form.get('gender')
 
     user = User.query.filter_by(name=username).first()  # if this returns a user, then the username already exists in
@@ -151,7 +166,7 @@ def signup_post():
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
     new_user = User(email=email, name=username, password=generate_password_hash(password, method='sha256'),
-                    first_name=first_name, last_name=last_name, phone_number=phone_number, gender=gender,
+                    first_name=first_name, last_name=last_name, phone_number=phone_number, gender=gender, linkedIn=linkedIn,
                     permission=Permission.USER)
 
     # add the new user to the database

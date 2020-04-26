@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <div class="card">
+
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="h4">Enter Opportunity Details</div>
+                </div>
+                <hr>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="notification text-danger">
+                            {{ messages[0] }}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="/addOpportunity">
+
+                    <div class="form-group">
+                        <label>Job Id </label>
+                        <input class="form-control" type="text" name="jobId" placeholder="Job Id"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Organization Name </label>
+                            <select class="form-control" id="select" name="orgNm" autofocus="">
+                                <option value="">Select Organization Name</option>
+                                    {% for org in orgName %}
+                                     <option value="{{ org.org_name }}">{{ org.org_name }}</option>
+                                    {% endfor %}
+                            </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Title </label>
+                        <input class="form-control" type="text" name="jobTitle" placeholder="Job Title"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Description</label>
+                        <input class="form-control" type="text" name="jobDescription"
+                               placeholder="Enter Job Description"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Location </label>
+                        <input class="form-control" type="text" name="jobLocation" placeholder="Job Location"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary"> Submit</button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+{% endblock %}

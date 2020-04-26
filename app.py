@@ -21,6 +21,16 @@ mail_settings = {
 }
 
 
+def admin_only(f):
+    @functools.wraps(f)
+    def wrap(*args, **kwargs):
+        if current_user and current_user.is_authenticated and current_user.is_admin():
+            return f(*args, **kwargs)
+        else:
+            flash("You are not authenticated to this page")
+            return redirect(url_for('user.userDashboard'))
+    return wrap
+
 
 def create_app():
     app = Flask(__name__)
@@ -64,7 +74,8 @@ def setup_database(app):
         from auth.models import User, Permission
 
         db.create_all()
-        _admins = ["voluteeradmin1223@gmail.com", "varsha13ahuja@gmail.com", "saikiran1298@gmail.com"]
+        _admins = ["voluteeradmin1223@gmail.com", "varshaahuja13@gmail.com", "saikiran1298@gmail.com", "xyz@gmail.com"]
+
         print("init db, setting up users/admins")
 
         user = User.query.filter_by(name="System3").first()
@@ -74,9 +85,6 @@ def setup_database(app):
             user = User(email="voluteeradmin1223@gmail.com", name="System3", password=generate_password_hash(password, method='sha256'), first_name='first_name', last_name='last_name', phone_number='433112354', gender='Male', permission=Permission.USER)
             db.session.add(user)
             db.session.commit()
-
-        else:
-            print('System user already exists ' + str(user.id))
 
         users = User.query.filter(User.email.in_(_admins)).all()
         for user in users:

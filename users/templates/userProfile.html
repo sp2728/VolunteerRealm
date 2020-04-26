@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<hr>
+    <div class="container align-content-center col-4">
+
+    <div class="card">
+
+        <div class="card-header">
+            <span class="float-left pt-2 h4"> Hi {{ users.name }} </span>
+            <span><button class="btn btn-info float-right"> Edit </button></span>
+        </div>
+        <br>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th colspan="3" scope="row">First Name:</th>
+                    <td>{{ users.first_name }}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="3" scope="row">Last Name:</th>
+                    <td>{{ users.last_name }}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="3" scope="row">Email:</th>
+                    <td>{{ users.email }}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="3" scope="row">Phone No:</th>
+                    <td>{{ users.phone_number }}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="3" scope="row">LinkedIn:</th>
+                    <td type="URL" >{{ users.linkedIn }}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

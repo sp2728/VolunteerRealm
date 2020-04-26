@@ -1,35 +1,101 @@
-from flask import Blueprint, render_template
-from flask_login import login_required
-from app import db
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required, current_user
+from app import db, admin_only
+from auth.models import Organization, OrgJobs, User
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
+
 @admin.route('/adminDashboard')
 @login_required
+@admin_only
 def adminDashboard():
-    return render_template('adminDashboard.html')
+    return render_template('adminDashboard.html', first_name=current_user.first_name)
+
 
 @admin.route('/usersLists')
 @login_required
+@admin_only
 def userList():
-    return render_template('userList.html')
+    user = User.query.all()
+    return render_template('userList.html', user=user)
 
 @admin.route('/deleteUser')
 @login_required
+@admin_only
 def deleteUser():
     return render_template('userList.html')
 
-@admin.route('/addOrganisation')
-@login_required
-def addOrganisation():
-    return render_template('addOrganisationList.html')
 
-@admin.route('/updateOrganisation')
+@admin.route('/addOrganization')
 @login_required
-def updateOrganisation():
-    return render_template('organisationList.html')
+@admin_only
+def addOrganization():
+    return render_template('addOrganization.html')
 
-@admin.route('/deleteOrganisation')
+
+@admin.route('/addOrganization', methods=['POST'])
 @login_required
-def deleteOrganisation():
-    return render_template('organisationList.html')
+@admin_only
+def addOrganization_post():
+    organizationName = request.form.get('organizationName')
+    organizationAddress = request.form.get('organizationAddress')
+    organizationEmail = request.form.get('email')
+    print(organizationName, organizationAddress)
+
+    org_name = Organization.query.filter_by(org_name=organizationName).first()
+    if org_name:
+        flash('Organization is already exists')
+        return redirect(url_for('admin.addOrganization'))
+
+    new_org = Organization(org_name=organizationName, org_address=organizationAddress, org_email=organizationEmail)
+    db.session.add(new_org)
+    db.session.commit()
+    return redirect(url_for('main.organizationList'))
+
+
+@admin.route('/addOpportunity')
+@login_required
+@admin_only
+def addOpportunity():
+    orgName = Organization.query.all()
+    return render_template('addOpportunity.html', orgName=orgName)
+
+
+@admin.route('/addOpportunity', methods=['POST'])
+@login_required
+@admin_only
+def addOpportunity_post():
+    jobId = request.form.get('jobId')
+    orgNm = request.form.get('orgNm')
+    jobTitle = request.form.get('jobTitle')
+    jobDescription = request.form.get('jobDescription')
+    jobLocation = request.form.get('jobLocation')
+
+    jid = OrgJobs.query.filter_by(job_id=jobId).first()
+
+    if jid:
+        flash('Job Id already exists')
+        return redirect(url_for('admin.addOpportunity'))
+
+    orgId = db.session.query(Organization.org_id).filter(Organization.org_name == orgNm).first()[0]
+
+    new_job = OrgJobs(job_id=jobId, org_id=orgId, job_title=jobTitle, job_description=jobDescription,
+                      job_location=jobLocation)
+    db.session.add(new_job)
+    db.session.commit()
+    return redirect(url_for('main.viewOpportunities'))
+
+
+@admin.route('/updateOrganization')
+@login_required
+@admin_only
+def updateOrganization():
+    return render_template('organizationList.html')
+
+
+@admin.route('/deleteOrganization')
+@login_required
+@admin_only
+def deleteOrganization():
+    return render_template('organizationList.html')
