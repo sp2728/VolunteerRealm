@@ -28,7 +28,7 @@ def admin_only(f):
             return f(*args, **kwargs)
         else:
             flash("You are not authenticated to this page")
-            return redirect(url_for('user.userDashboard'))
+            return redirect(url_for('user.userProfile'))
     return wrap
 
 

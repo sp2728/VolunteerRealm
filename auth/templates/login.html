@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container text-center">
-    <div class="card login">
-        <div class="card-header"><h3 style="color:darkmagenta;"><strong>LOGIN</strong></h3></div>
+<div class="container backpic">
+    <div class="card text-center login">
+        <div class="card-header"><h3><strong>Login</strong></h3></div>
         <div class="card-body">
             <div class="box">
                 {% with messages = get_flashed_messages() %}
@@ -45,5 +45,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}

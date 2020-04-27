@@ -6,13 +6,6 @@ from auth.models import User, UserOrgJobs, OrgJobs
 
 user = Blueprint('user', __name__, template_folder='templates')
 
-
-@user.route('/userDashboard')
-@login_required
-def userDashboard():
-    return render_template('userDashboard.html', name=current_user.name)
-
-
 @user.route('/editUser')
 @login_required
 def editUser():

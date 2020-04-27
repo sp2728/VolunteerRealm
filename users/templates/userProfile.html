@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<hr>
-    <div class="container align-content-center col-4">
+    <div class="container p-5">
 
-    <div class="card">
+    <div class="card cardspage">
 
-        <div class="card-header">
-            <span class="float-left pt-2 h4"> Hi {{ users.name }} </span>
-            <span><button class="btn btn-info float-right"> Edit </button></span>
-        </div>
-        <br>
-        <div class="card-body">
+        <div class="card-body border-3 shadow">
+
+            <div>
+                <span class="float-left pt-2 h4"> Hi {{ users.name }}, </span>
+                <span><button class="btn btn-info float-right "> Edit </button></span>
+            </div>
             <table class="table">
                 <tbody>
                 <tr>
@@ -36,7 +35,7 @@
 
                 <tr>
                     <th colspan="3" scope="row">LinkedIn:</th>
-                    <td type="URL" >{{ users.linkedIn }}</td>
+                    <td type="URL">{{ users.linkedIn }}</td>
                 </tr>
 
                 </tbody>

@@ -13,7 +13,6 @@ def index():
     return render_template('index.html')
 
 @main.route('/viewOpportunities')
-@login_required
 def viewOpportunities():
     orgJobs = OrgJobs.query.all()
     return render_template('viewOpportunities.html', orgJobs=orgJobs)
@@ -47,7 +46,7 @@ def applyOppurtunity(id):
 
     msg.html = render_template('/applyOpportunity.html', job=job.job_id)
     mail.send(msg)
-
+    flash('Successfully Applied')
     return redirect(url_for('main.viewOpportunities'))
 
 
