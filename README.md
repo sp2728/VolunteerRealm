@@ -1,4 +1,4 @@
-# VolunteerRealm
+# VolunteerRealm [![Build Status](https://travis-ci.com/sp2728/VolunteerRealm.svg?branch=development)](https://travis-ci.com/sp2728/VolunteerRealm)
 
 ## Team Members: Sai Kiran Pocham, Varsha Ahuja, Jinal Kalpesh Shah, Yahya Mohammed
 
