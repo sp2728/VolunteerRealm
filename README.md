@@ -29,5 +29,5 @@
 - [ ] (added) Admin should be able to delete organizations
 - [x] (added) User should be able to view the volunteering History
 - [ ] (added) Implement the About Us page (UI & Linikng)
-- [ ] (added) Create the test file for all features
-- [ ] (added) Link the tests to Travis
+- [x] (added) Create the test file for all features (will add more tests in upcoming milestone)
+- [x] (added) Link the tests to Travis
