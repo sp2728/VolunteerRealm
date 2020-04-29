@@ -1,1 +1,1 @@
-web: gunicorn VolunteerRealm:app
+web: gunicorn app:VolunteerRealm
