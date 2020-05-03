@@ -9,7 +9,7 @@
 
             <div>
                 <span class="float-left pt-2 h4"> Hi {{ users.name }}, </span>
-                <span><button class="btn btn-info float-right "> Edit </button></span>
+                <span><button class="btn btn-info float-right" href="{{ url_for('user.editUser') }}"> Edit </button></span>
             </div>
             <table class="table">
                 <tbody>
