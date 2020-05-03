@@ -1,12 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
     <hr>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification alert alert-dark ">
+                {% for message in messages %}
+                    <div class="text-center text-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
     <div class="container p-4">
         <div class="card cardspage shadow">
             <h2 class="text-center pt-3">
                 Organizations
                 {% if current_user.is_authenticated and current_user.is_admin() %}
-                <a class="btn btn-warning float-right mr-5 border" href="/addOrganization"> Add Organisation</a>
+                    <a class="btn btn-warning float-right mr-5 border" href="/addOrganization"> Add Organisation</a>
                 {% endif %}
             </h2>
             {% for row in organization %}
@@ -15,9 +28,16 @@
                     <div class="col">
                         <h3>{{ row.org_name }}</h3>
                         <p><strong>Organisation Address: </strong>{{ row.org_address }}</p>
+                        <p><strong>Organisation Email: </strong>{{ row.org_email }}</p>
                     </div>
                     <div class="col-4 text-center pt-4">
-                        <a class="btn btn-info" href="/deleteUser/{{ organization.id }}"> delete</a>
+                        {% if current_user.is_authenticated and current_user.is_admin() %}
+
+                            <a class="btn" href="/editOrganization/{{ row.org_id }}" data-toggle="tooltip"
+                               data-placement="top" title="Edit"><i class="fa fa-lg text-info fa-edit"></i> </a>
+                            <a class="btn" href="/deleteOrganization/{{ row.org_id }}" data-toggle="tooltip"
+                               data-placement="top" title="Delete"> <i class="fa fa-lg text-danger fa-trash"></i></a>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

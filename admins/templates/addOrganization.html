@@ -18,33 +18,67 @@
                     {% endif %}
                 {% endwith %}
 
-                <form method="POST" action="/addOrganization">
+                {% if not edit %}
+                    <form method="POST" action="/addOrganization">
 
-                    <div class="form-group">
-                        <label>Organization Name</label>
-                        <input class="form-control" type="text" name="organizationName" placeholder="Organization Name"
-                               autofocus="">
-                    </div>
+                        <div class="form-group">
+                            <label>Organization Name</label>
+                            <input class="form-control" type="text" name="organizationName"
+                                   placeholder="Organization Name"
+                                   autofocus="">
+                        </div>
 
-                    <div class="form-group">
-                        <label>Organization Address</label>
-                        <input class="form-control" type="text" name="organizationAddress"
-                               placeholder="Enter Organization Address"
-                               autofocus="">
-                    </div>
+                        <div class="form-group">
+                            <label>Organization Address</label>
+                            <input class="form-control" type="text" name="organizationAddress"
+                                   placeholder="Enter Organization Address"
+                                  autofocus="">
+                        </div>
 
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input class="form-control" type="email" name="email"
-                               placeholder="Enter Organization Point of Contact Email"
-                               autofocus="">
-                    </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="email" name="email"
+                                   placeholder="Enter Organization Point of Contact Email"
+                                   autofocus="">
+                        </div>
 
-                    <div class="form-group text-center">
-                        <button class="btn btn-info"> Submit</button>
+                        <div class="form-group text-center">
+                            <button class="btn btn-primary"> Submit</button>
+                        </div>
 
-                    </div>
-                </form>
+                    </form>
+                {% endif %}
+
+                {% if edit %}
+
+                    <form method="POST" action="/editOrganization/{{ org.org_id }}">
+
+                        <div class="form-group">
+                            <label>Organization Name</label>
+                            <input class="form-control" type="text" name="organizationName"
+                                   placeholder="Organization Name"
+                                   value="{{ org.org_name }}" autofocus="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Organization Address</label>
+                            <input class="form-control" type="text" name="organizationAddress"
+                                   placeholder="Enter Organization Address"
+                                   value="{{ org.org_address }}" autofocus="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="email" name="email"
+                                   placeholder="Enter Organization Point of Contact Email"
+                                   value="{{ org.org_email }}" autofocus="">
+                        </div>
+                        <div class="form-group text-center">
+                            <button class="btn btn-primary"> Update</button>
+                        </div>
+                    </form>
+                {% endif %}
+
             </div>
         </div>
     </div>

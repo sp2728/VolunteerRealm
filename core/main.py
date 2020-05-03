@@ -51,7 +51,6 @@ def applyOppurtunity(id):
 
 
 @main.route('/organizationList')
-@login_required
 def organizationList():
     organization = Organization.query.all()
     return render_template('organizationList.html', organization=organization)
