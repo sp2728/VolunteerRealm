@@ -41,7 +41,6 @@ def addOrganization_post():
     organizationName = request.form.get('organizationName')
     organizationAddress = request.form.get('organizationAddress')
     organizationEmail = request.form.get('email')
-    print(organizationName, organizationAddress)
 
     org_name = Organization.query.filter_by(org_name=organizationName).first()
     if org_name:
@@ -78,6 +77,7 @@ def addOpportunity_post():
         flash('Job Id already exists')
         return redirect(url_for('admin.addOpportunity'))
 
+
     orgId = db.session.query(Organization.org_id).filter(Organization.org_name == orgNm).first()[0]
 
     new_job = OrgJobs(job_id=jobId, org_id=orgId, job_title=jobTitle, job_description=jobDescription,
@@ -87,16 +87,37 @@ def addOpportunity_post():
     return redirect(url_for('main.viewOpportunities'))
 
 
-@admin.route('/updateOrganization')
+@admin.route('/editOrganization/<id>')
 @login_required
 @admin_only
-def updateOrganization():
-    return render_template('organizationList.html')
+def editOrganization(id):
+    org = Organization.query.filter_by(org_id=id).first()
 
+    return render_template('addOrganization.html', org=org, edit=1)
 
-@admin.route('/deleteOrganization')
+@admin.route('/editOrganization/<id>',  methods=['POST'])
 @login_required
 @admin_only
-def deleteOrganization():
-    return render_template('organizationList.html')
+def editOrganization_post(id):
+    organizationName = request.form.get('organizationName')
+    organizationAddress = request.form.get('organizationAddress')
+    organizationEmail = request.form.get('email')
+
+    org = Organization.query.filter_by(org_id=id).first()
+    org.org_name=organizationName;
+    org.org_address=organizationAddress;
+    org.org_email=organizationEmail
+    db.session.commit()
+    flash('Organisation Updated'+ org.org_name)
+    return redirect(url_for('main.organizationList'))
+
+
+@admin.route('/deleteOrganization/<id>')
+@login_required
+@admin_only
+def deleteOrganization(id):
+    org = Organization.query.filter(Organization.org_id==id).delete()
+    db.session.commit()
+
+    return redirect(url_for('main.organizationList'))
 

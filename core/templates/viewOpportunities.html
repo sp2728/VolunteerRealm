@@ -20,7 +20,7 @@
             <h2 class="text-center pt-3">
                 Opportunities
                 {% if current_user.is_authenticated and current_user.is_admin() %}
-                <a class="btn btn-warning float-right mr-5 border" href="/addOpportunity"> Add Opportunity</a>
+                    <a class="btn btn-warning float-right mr-5 border" href="/addOpportunity"> Add Opportunity</a>
                 {% endif %}
             </h2>
             {% for job in orgJobs %}
@@ -32,7 +32,17 @@
                         <p><strong>Location: </strong>{{ job.job_location }}</p>
                     </div>
                     <div class="col-4 text-center pt-4">
-                        <a class="btn btn-info" href="/applyOpportunity/{{ job.orgJob_id }}"> Apply Now</a>
+                        {% if (current_user.is_authenticated and not current_user.is_admin()) or (not current_user.is_authenticated) %}
+                            <a class="btn btn-info" href="/applyOpportunity/{{ job.orgJob_id }}"> Apply Now</a>
+                        {% endif %}
+                        {% if current_user.is_authenticated and current_user.is_admin() %}
+                            <a class="btn" href="/editOpportunity/{{ job.id }}" data-toggle="tooltip"
+                               data-placement="top" title="Edit"><i class="fa fa-lg text-info fa-edit"></i> </a>
+                            <a class="btn" href="/deleteOpportunity/{{ job.id }}" data-toggle="tooltip"
+                               data-placement="top" title="Delete"> <i class="fa fa-lg text-danger fa-trash"></i></a>
+                        {% endif %}
+
+
                     </div>
                 </div>
             {% endfor %}
