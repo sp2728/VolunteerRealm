@@ -117,6 +117,8 @@ def editOrganization_post(id):
 @admin_only
 def deleteOrganization(id):
     org = Organization.query.filter(Organization.org_id==id).delete()
+    job = OrgJobs.query.filter(OrgJobs.org_id==id).delete()
+
     db.session.commit()
 
     return redirect(url_for('main.organizationList'))

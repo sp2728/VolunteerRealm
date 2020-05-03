@@ -23,25 +23,34 @@
                     <a class="btn btn-warning float-right mr-5 border" href="/addOpportunity"> Add Opportunity</a>
                 {% endif %}
             </h2>
-            {% for job in orgJobs %}
+            {% for orgJob in orgJobs %}
                 <hr>
                 <div class="row m-2">
                     <div class="col">
-                        <h3>{{ job.job_title }}</h3>
-                        <p><strong>Job Description: </strong>{{ job.job_description }}</p>
-                        <p><strong>Location: </strong>{{ job.job_location }}</p>
+                        <h3>{{ orgJob.job_title }}</h3>
+                        <p><strong>Job Description: </strong>{{ orgJob.job_description }}</p>
+                        {% for org in orgs %}
+                            {% if orgJob.org_id == org.org_id %}
+                            <p><strong>Organization: </strong>{{ org.org_name }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p><strong>Location: </strong>{{ orgJob.job_location }}</p>
                     </div>
                     <div class="col-4 text-center pt-4">
-                        {% if (current_user.is_authenticated and not current_user.is_admin()) or (not current_user.is_authenticated) %}
-                            <a class="btn btn-info" href="/applyOpportunity/{{ job.orgJob_id }}"> Apply Now</a>
-                        {% endif %}
+                    {% if (current_user.is_authenticated and not current_user.is_admin()) or (not current_user.is_authenticated) %}
+                            {% if orgJob.orgJob_id|string in jobs %}
+                                <a class="btn btn-info" disabled="disabled"> Applied</a>
+                            {% else %}
+                                <a class="btn btn-info" href="/applyOpportunity/{{ orgJob.orgJob_id }}"> Apply Now</a>
+                            {% endif %}
+                    {% endif %}
+
                         {% if current_user.is_authenticated and current_user.is_admin() %}
-                            <a class="btn" href="/editOpportunity/{{ job.id }}" data-toggle="tooltip"
+                            <a class="btn" href="/editOpportunity/{{ orgJob.id }}" data-toggle="tooltip"
                                data-placement="top" title="Edit"><i class="fa fa-lg text-info fa-edit"></i> </a>
-                            <a class="btn" href="/deleteOpportunity/{{ job.id }}" data-toggle="tooltip"
+                            <a class="btn" href="/deleteOpportunity/{{ orgJob.id }}" data-toggle="tooltip"
                                data-placement="top" title="Delete"> <i class="fa fa-lg text-danger fa-trash"></i></a>
                         {% endif %}
-
 
                     </div>
                 </div>
