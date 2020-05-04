@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from werkzeug.security import generate_password_hash
 from flask_mail import Mail
+
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -29,6 +30,7 @@ def admin_only(f):
         else:
             flash("You are not authenticated to this page")
             return redirect(url_for('user.userProfile'))
+
     return wrap
 
 
@@ -50,8 +52,8 @@ def register_extensions(app):
     app.config.update(mail_settings)
     mail.init_app(app)
 
-def register_blueprints(app):
 
+def register_blueprints(app):
     from auth.models import User
     from auth.auth import auth as auth_blueprint
     from core.main import main as main_blueprint
@@ -74,7 +76,7 @@ def setup_database(app):
         from auth.models import User, Permission
 
         db.create_all()
-        _admins = ["voluteeradmin1223@gmail.com", "varshaahuja13@gmail.com", "saikiran1298@gmail.com", "xyz@gmail.com"]
+        _admins = ["voluteeradmin1223@gmail.com", "varshaahuja13@gmail.com", "saikiran1298@gmail.com", "vl73@njit.edu"]
 
         print("init db, setting up users/admins")
 
@@ -82,7 +84,9 @@ def setup_database(app):
         if user is None:
             print('Creating system user')
             password = 'password'
-            user = User(email="voluteeradmin1223@gmail.com", name="System3", password=generate_password_hash(password, method='sha256'), first_name='first_name', last_name='last_name', phone_number='433112354', gender='Male', permission=Permission.USER)
+            user = User(email="voluteeradmin1223@gmail.com", name="System3",
+                        password=generate_password_hash(password, method='sha256'), first_name='first_name',
+                        last_name='last_name', phone_number='433112354', gender='Male', permission=Permission.USER)
             db.session.add(user)
             db.session.commit()
 

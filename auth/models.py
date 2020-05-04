@@ -48,3 +48,7 @@ class UserOrgJobs(db.Model):
     uoj_id = db.Column(db.Integer, primary_key=True)
     orgJob_id = db.Column(db.Integer, db.ForeignKey('org_jobs.orgJob_id'))
     id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    job_title = db.Column(db.String(100))
+    job_description = db.Column(db.String(2000))
+    job_location = db.Column(db.String(100))
+    org_name = db.Column(db.String(100))
