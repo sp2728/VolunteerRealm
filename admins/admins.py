@@ -41,6 +41,11 @@ def addOrganization_post():
         flash('Organization is already exists')
         return redirect(url_for('admin.addOrganization'))
 
+    org_email=Organization.query.filter_by(org_email=organizationEmail).first()
+    if org_email:
+        flash('Organization email is already exists')
+        return redirect(url_for('admin.addOrganization'))
+
     new_org = Organization(org_name=organizationName, org_address=organizationAddress, org_email=organizationEmail)
     db.session.add(new_org)
     db.session.commit()
