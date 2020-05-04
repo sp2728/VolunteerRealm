@@ -18,13 +18,12 @@ def viewOpportunities():
     orgJobs = OrgJobs.query.all()
     orgs = Organization.query.all()
     jobs_id = []
-    '''
-    print(current_user.id)
-    if current_user.is_admin():
+
+    if(current_user.is_authenticated):
         jobs = UserOrgJobs.query.filter_by(id=current_user.id).all()
         for value in jobs:
             jobs_id += (str(value.orgJob_id))
-         '''
+
     return render_template('viewOpportunities.html', orgJobs=orgJobs, orgs=orgs, jobs=jobs_id)
 
 
