@@ -25,7 +25,7 @@ def test_getSignup(client):
 
 
 def test_login(client):
-    rv = client.post(url_for('auth.login'), data={'name': 'test3', 'password': '1234'},
+    rv = client.post(url_for('auth.login'), data={'name': 'test123', 'password': '1234'},
                      follow_redirects=True)
     assert rv.status_code == 200
     assert b"Volunteering Opportunities" in rv.data
