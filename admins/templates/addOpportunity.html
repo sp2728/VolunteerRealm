@@ -17,6 +17,7 @@
                     {% endif %}
                 {% endwith %}
 
+                {% if not edit %}
                 <form method="POST" action="/addOpportunity">
 
                     <div class="form-group">
@@ -61,7 +62,55 @@
             </div>
         </div>
     </div>
+      {% endif %}
+      {% if edit %}
 
+<form method="POST" action="/editOpportunity/{{ job.job_id }}">
+
+     <div class="form-group">
+                        <label>Job Id </label>
+                        <input class="form-control" type="text" name="jobId" placeholder="Job Id"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Organization Name </label>
+                        <select class="form-control" id="select" name="orgNm" autofocus="">
+                            <option value="">Select Organization Name</option>
+                            {% for org in orgName %}
+                                <option value="{{ org.org_name }}">{{ org.org_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Title </label>
+                        <input class="form-control" type="text" name="jobTitle" placeholder="Job Title"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Description</label>
+                        <input class="form-control" type="text" name="jobDescription"
+                               placeholder="Enter Job Description"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Location </label>
+                        <input class="form-control" type="text" name="jobLocation" placeholder="Job Location"
+                               autofocus="">
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary"> Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+      {% endif %}
 
 
 {% endblock %}
+
