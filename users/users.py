@@ -17,6 +17,28 @@ def editUser(id):
     phone_number = request.form.get('PhoneNumber')
     linkedIn = request.form.get('linkedIn')
 
+    user1 = User.query.filter_by(name=username).first()  # if this returns a user, then the username already exists in
+    # database
+
+    if user1:  # if a user is found, we want to redirect back to signup page so user can try again
+        flash('Sorry! Username already exists')
+        return redirect(url_for('user.userProfile'))
+
+    email1 = User.query.filter_by(email=email).first()  # if this returns a user, then the email already exists in
+    # database
+
+    if email1:  # if a user is found, we want to redirect back to signup page so user can try again
+        flash('Sorry! Email already exists')
+        return redirect(url_for('user.userProfile'))
+
+    phone = User.query.filter_by(
+        phone_number=phone_number).first()  # if this returns a user, then the email already exists in
+    # database
+
+    if phone:  # if a user is found, we want to redirect back to signup page so user can try again
+        flash('Sorry! Phone Number already exists')
+        return redirect(url_for('user.userProfile'))
+
     user = User.query.filter_by(id=id).first()  # if this returns a user, then the username already exists in
     # database
 
@@ -52,8 +74,9 @@ def userProfile():
 @user.route('/volunteeringHistory')
 @login_required
 def volunteeringHistory():
-    orgjobs = db.session.query(OrgJobs, UserOrgJobs).filter(OrgJobs.orgJob_id == UserOrgJobs.orgJob_id,
-                                                            UserOrgJobs.id == current_user.id)
+    #orgjobs = db.session.query(OrgJobs, UserOrgJobs).filter(OrgJobs.orgJob_id == UserOrgJobs.orgJob_id,
+     #                                                       UserOrgJobs.id == current_user.id)
+    orgjobs = db.session.query(UserOrgJobs).filter(UserOrgJobs.id == current_user.id)
     return render_template('volunteeringHistory.html', orgjobs=orgjobs)
 
 
