@@ -61,3 +61,7 @@ def applyOpportunity(id):
 def organizationList():
     organization = Organization.query.all()
     return render_template('organizationList.html', organization=organization)
+
+@main.route('/aboutUs')
+def aboutUs():
+    return render_template('aboutUs.html')

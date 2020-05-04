@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from flask_mail import Message
-from app import mail_settings, db
+from app import mail_settings, db, mail
 from auth.models import User, UserOrgJobs, OrgJobs
 
 user = Blueprint('user', __name__, template_folder='templates')
@@ -67,3 +67,17 @@ def opportunities():
 @login_required
 def contact():
     return render_template('contact.html')
+
+@user.route('/mailAdmin', methods=['POST'])
+@login_required
+def mailAdmin_post():
+    #email = request.form.get('email')
+    email = "mmm249@njit.edu";
+    #user = User.query.filter_by(email=email).first()
+    msg = Message(subject="User Query",
+                  sender=mail_settings["MAIL_USERNAME"],
+                  recipients=[email]  # replace with your email for testing
+                  )
+    msg = request.form.get('comments')
+    mail.send(msg)
+    flash('Your message has been sent to the admin.')

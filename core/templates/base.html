@@ -207,8 +207,16 @@
         </div>
         <div class="col">
             <ul class="list-unstyled">
-                <li class="p-2 font-weight-bold">About Us</li>
-                <li class="p-2 font-weight-bold">Contact Us</li>
+                <li class="p-2 font-weight-bold">
+                    <a href="{{ url_for('main.aboutUs') }}">
+                    <p style="color:White;">About Us</p>
+                    </a>
+                </li>
+                <li class="p-2 font-weight-bold">
+                    <a href="{{ url_for('user.contact') }}">
+                    <p style="color:White;">Contact Us</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
