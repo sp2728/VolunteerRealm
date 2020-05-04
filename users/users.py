@@ -19,23 +19,19 @@ def editUser(id):
 
     user1 = User.query.filter_by(name=username).first()  # if this returns a user, then the username already exists in
     # database
-
-    if user1:  # if a user is found, we want to redirect back to signup page so user can try again
+    if user1 and user1.name!=current_user.name :  # if a user is found, we want to redirect back to signup page so user can try again
         flash('Sorry! Username already exists')
         return redirect(url_for('user.userProfile'))
 
     email1 = User.query.filter_by(email=email).first()  # if this returns a user, then the email already exists in
     # database
-
-    if email1:  # if a user is found, we want to redirect back to signup page so user can try again
+    if email1 and email1.email!=current_user.email:  # if a user is found, we want to redirect back to signup page so user can try again
         flash('Sorry! Email already exists')
         return redirect(url_for('user.userProfile'))
 
-    phone = User.query.filter_by(
-        phone_number=phone_number).first()  # if this returns a user, then the email already exists in
+    phone = User.query.filter_by(phone_number=phone_number).first()  # if this returns a user, then the email already exists in
     # database
-
-    if phone:  # if a user is found, we want to redirect back to signup page so user can try again
+    if phone and phone.phone_number!=current_user.phone_number:  # if a user is found, we want to redirect back to signup page so user can try again
         flash('Sorry! Phone Number already exists')
         return redirect(url_for('user.userProfile'))
 
@@ -57,10 +53,17 @@ def editUser(id):
 @user.route('/deleteUser/<id>')
 @login_required
 def deleteUser(id):
-    user = User.query.filter_by(id=id).delete()
-    db.session.commit()
 
-    return redirect(url_for('auth.logout'))
+    if current_user.is_admin():
+        user = User.query.filter_by(id=id).delete()
+        db.session.commit()
+        return redirect(url_for('admin.userList'))
+    else:
+        user = User.query.filter_by(id=id).delete()
+        db.session.commit()
+        return redirect(url_for('auth.logout'))
+
+
 
 
 @user.route('/userProfile')
@@ -87,20 +90,28 @@ def opportunities():
 
 
 @user.route('/contact')
-@login_required
 def contact():
     return render_template('contact.html')
 
 @user.route('/mailAdmin', methods=['POST'])
-@login_required
 def mailAdmin_post():
-    #email = request.form.get('email')
-    email = "mmm249@njit.edu";
-    #user = User.query.filter_by(email=email).first()
+
+    email = request.form.get('email')
+    name = request.form.get('name')
+    comments = request.form.get('comments')
+
+    user = User.query.filter_by(email=email).first()
     msg = Message(subject="User Query",
-                  sender=mail_settings["MAIL_USERNAME"],
-                  recipients=[email]  # replace with your email for testing
+                  sender=email,
+                  recipients=[mail_settings["MAIL_USERNAME"]]  # replace with your email for testing
                   )
-    msg = request.form.get('comments')
+    msg.html = '''<p>Hello</p> 
+    <p>You or someone else has requested that a new password be generated for your 
+    account.If you did not make this request, then you can simply ignore this email.</p> 
+
+    <p>Best Wishes,</p>
+    <p>Admin</p>
+    <p>Admin@volunteerrealm.com</p>'''
     mail.send(msg)
     flash('Your message has been sent to the admin.')
+    return redirect(url_for('user.contact'))

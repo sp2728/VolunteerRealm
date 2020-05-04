@@ -3,8 +3,12 @@
 {% block content %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="notification text-danger">
-                {{ messages[0] }}
+            <div class="notification alert alert-dark ">
+                {% for message in messages %}
+                    <div class="text-center text-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             </div>
         {% endif %}
     {% endwith %}

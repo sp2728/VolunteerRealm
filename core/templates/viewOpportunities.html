@@ -45,9 +45,9 @@
                             {% endif %}
                         {% endif %}
                         {% if current_user.is_authenticated and current_user.is_admin() %}
-                            <a class="btn" href="/editOpportunity/{{ orgJob.id }}" data-toggle="tooltip"
+                            <a class="btn" href="/editOpportunity/{{ orgJob.orgJob_id }}" data-toggle="tooltip"
                                data-placement="top" title="Edit"><i class="fa fa-lg text-info fa-edit"></i> </a>
-                            <a class="btn" href="/deleteOpportunity/{{ orgJob.id }}" data-toggle="tooltip"
+                            <a class="btn" href="/deleteOpportunity/{{ orgJob.orgJob_id }}" data-toggle="tooltip"
                                data-placement="top" title="Delete"> <i class="fa fa-lg text-danger fa-trash"></i></a>
                         {% endif %}
 

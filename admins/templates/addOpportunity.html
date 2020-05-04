@@ -5,10 +5,7 @@
         <div class="card cardspage shadow">
 
             <div class="card-body">
-                <div class="form-group">
-                    <div class="h4">Enter Opportunity Details</div>
-                </div>
-                <hr>
+
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         <div class="notification text-danger">
@@ -18,98 +15,99 @@
                 {% endwith %}
 
                 {% if not edit %}
-                <form method="POST" action="/addOpportunity">
 
                     <div class="form-group">
-                        <label>Job Id </label>
-                        <input class="form-control" type="text" name="jobId" placeholder="Job Id"
-                               autofocus="">
+                        <div class="h4">Enter Opportunity Details</div>
                     </div>
+                    <hr>
+                    <form method="POST" action="/addOpportunity">
 
-                    <div class="form-group">
-                        <label>Organization Name </label>
-                        <select class="form-control" id="select" name="orgNm" autofocus="">
-                            <option value="">Select Organization Name</option>
-                            {% for org in orgName %}
-                                <option value="{{ org.org_name }}">{{ org.org_name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label>Job Id </label>
+                            <input class="form-control" type="text" name="jobId" placeholder="Job Id"
+                                   autofocus="">
+                        </div>
 
-                    <div class="form-group">
-                        <label>Job Title </label>
-                        <input class="form-control" type="text" name="jobTitle" placeholder="Job Title"
-                               autofocus="">
-                    </div>
+                        <div class="form-group">
+                            <label>Organization Name </label>
+                            <select class="form-control" id="select" name="orgNm" autofocus="">
+                                <option value="">Select Organization Name</option>
+                                {% for org in orgName %}
+                                    <option value="{{ org.org_name }}">{{ org.org_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Job Description</label>
-                        <input class="form-control" type="text" name="jobDescription"
-                               placeholder="Enter Job Description"
-                               autofocus="">
-                    </div>
+                        <div class="form-group">
+                            <label>Job Title </label>
+                            <input class="form-control" type="text" name="jobTitle" placeholder="Job Title"
+                                   autofocus="">
+                        </div>
 
-                    <div class="form-group">
-                        <label>Job Location </label>
-                        <input class="form-control" type="text" name="jobLocation" placeholder="Job Location"
-                               autofocus="">
-                    </div>
+                        <div class="form-group">
+                            <label>Job Description</label>
+                            <input class="form-control" type="text" name="jobDescription"
+                                   placeholder="Enter Job Description"
+                                   autofocus="">
+                        </div>
 
-                    <div class="form-group text-center">
-                        <button class="btn btn-primary"> Submit</button>
+                        <div class="form-group">
+                            <label>Job Location </label>
+                            <input class="form-control" type="text" name="jobLocation" placeholder="Job Location"
+                                   autofocus="">
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button class="btn btn-primary"> Submit</button>
+                        </div>
+                    </form>
                     </div>
-                </form>
-            </div>
+                    </div>
+                    </div>
+                {% endif %}
+    {% if edit %}
+
+        <div class="form-group">
+            <div class="h4">Update Opportunity Details</div>
         </div>
-    </div>
-      {% endif %}
-      {% if edit %}
+        <hr>
+        <form method="POST" action="/editOpportunity/{{ job.orgJob_id }}">
 
-<form method="POST" action="/editOpportunity/{{ job.job_id }}">
-
-     <div class="form-group">
-                        <label>Job Id </label>
-                        <input class="form-control" type="text" name="jobId" placeholder="Job Id"
-                               autofocus="">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Organization Name </label>
-                        <select class="form-control" id="select" name="orgNm" autofocus="">
-                            <option value="">Select Organization Name</option>
-                            {% for org in orgName %}
-                                <option value="{{ org.org_name }}">{{ org.org_name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Job Title </label>
-                        <input class="form-control" type="text" name="jobTitle" placeholder="Job Title"
-                               autofocus="">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Job Description</label>
-                        <input class="form-control" type="text" name="jobDescription"
-                               placeholder="Enter Job Description"
-                               autofocus="">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Job Location </label>
-                        <input class="form-control" type="text" name="jobLocation" placeholder="Job Location"
-                               autofocus="">
-                    </div>
-
-                    <div class="form-group text-center">
-                        <button class="btn btn-primary"> Update</button>
-                    </div>
-                </form>
+            <div class="form-group">
+                <label>Job Id </label>
+                <input class="form-control" type="text" name="jobId" placeholder="Job Id" value="{{ job.job_id }}"
+                       autofocus="">
             </div>
+
+            <div class="form-group">
+                <label>Job Title </label>
+                <input class="form-control" type="text" name="jobTitle" placeholder="Job Title"
+                       value="{{ job.job_title }}"
+                       autofocus="">
+            </div>
+
+            <div class="form-group">
+                <label>Job Description</label>
+                <input class="form-control" type="text" name="jobDescription" value="{{ job.job_description }}"
+                       placeholder="Enter Job Description"
+                       autofocus="">
+            </div>
+
+            <div class="form-group">
+                <label>Job Location </label>
+                <input class="form-control" type="text" name="jobLocation" placeholder="Job Location"
+                       value="{{ job.job_location }}"
+                       autofocus="">
+            </div>
+
+            <div class="form-group text-center">
+                <button class="btn btn-primary"> Update</button>
+            </div>
+        </form>
         </div>
-    </div>
-      {% endif %}
+        </div>
+        </div>
+    {% endif %}
 
 
 {% endblock %}

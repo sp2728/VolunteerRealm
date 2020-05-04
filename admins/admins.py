@@ -20,12 +20,6 @@ def userList():
     user = User.query.all()
     return render_template('userList.html', user=user)
 
-@admin.route('/deleteUser')
-@login_required
-@admin_only
-def deleteUser():
-    return render_template('userList.html')
-
 
 @admin.route('/addOrganization')
 @login_required
@@ -111,34 +105,12 @@ def editOrganization_post(id):
     flash('Organisation Updated'+ org.org_name)
     return redirect(url_for('main.organizationList'))
 
-@admin.route('/editOpportunity/<id>')
-@login_required
-@admin_only
-def editOpportunity(id):
-    job = Org_jobs.query.filter_by(orgJob_id=id).first()
-    return render_template('addOpportunity.html', job=job, edit=1)
-
-@admin.route('/editOpportunity/<id>', methods=['POST'])
-@login_required
-@admin_only
-def editOpportunity_post(id):
-        jobTitle = request.form.get('jobTitle')
-        jobDescription = request.form.get('jobDescription')
-        jobLocation = request.form.get('jobLocation')
-
-        job = Org_jobs.query.filter_by(job_id=id).first()
-        job.job_title = jobTitle;
-        job.job_description = jobDescription;
-        job.job_location = jobLocation;
-        db.session.commit()
-        flash('Opportunity Updated' + job.job_title)
-        return redirect(url_for('main.viewOpportunities')
 
 
 @admin.route('/deleteOrganization/<id>')
 @login_required
 @admin_only
- def deleteOrganization(id):
+def deleteOrganization(id):
     org = Organization.query.filter(Organization.org_id==id).delete()
     job = OrgJobs.query.filter(OrgJobs.org_id==id).delete()
 
@@ -146,13 +118,42 @@ def editOpportunity_post(id):
 
     return redirect(url_for('main.organizationList'))
 
-
 @admin.route('/deleteOpportunity/<id>')
 @login_required
 @admin_only
 def deleteOpportunity(id):
-    job = Org_jobs.query.filter(Org_jobs.orgJob_id==id).delete()
+    job = OrgJobs.query.filter(OrgJobs.orgJob_id==id).delete()
     db.session.commit()
 
     return redirect(url_for('main.viewOpportunities'))
+
+@admin.route('/editOpportunity/<id>')
+@login_required
+@admin_only
+def editOpportunity(id):
+    job = OrgJobs.query.filter_by(orgJob_id=id).first()
+    orgName = Organization.query.all()
+    return render_template('addOpportunity.html',orgName=orgName, job=job, edit=1)
+
+@admin.route('/editOpportunity/<id>', methods=['POST'])
+@login_required
+@admin_only
+def editOpportunity_post(id):
+    jobTitle = request.form.get('jobTitle')
+    jobDescription = request.form.get('jobDescription')
+    jobLocation = request.form.get('jobLocation')
+
+    job = OrgJobs.query.filter_by(orgJob_id=id).first()
+    job.job_title = jobTitle;
+    job.job_description = jobDescription;
+    job.job_location = jobLocation;
+    db.session.commit()
+    flash('Opportunity Updated' + job.job_title)
+    return redirect(url_for('main.viewOpportunities'))
+
+
+
+
+
+
 
