@@ -14,20 +14,25 @@
 - [x] User can reset password using forgot password link
 - [x] User can view user dashboard post login (the default page is now the profile page and the user navbar has been implemented on all user dashboards isntead)
 - [x] User can view his profile through dashboard
-- [ ] User can update his profile post login
+- [x] User can update his profile post login
 - [x] User can view list of existing volunteering opportunities on dashboard
 - [x] User can apply for available volunteering opportunities through registration form (we are directly sending the user information as per the user profile in email to the job POC)
 - [x] Multiple users can apply for a single opportunity
 - [x] Unregistered users can view the homepage & the website details
-- [ ] User should be able to contact the support via contact details
+- [x] User should be able to contact the support via contact details
 - [x] Admin should be able to view his dashboard post login
 - [x] Admin should be able to add the organization opportunities
-- [ ] Admin should be able to delete the organization opportunities
+- [x] Admin should be able to delete the organization opportunities
 - [x] Admin should be able to view all the user lists
 - [x] (added) Amin should be able to view organization list
 - [x] (added) Admin should be able to add organizations
-- [ ] (added) Admin should be able to delete organizations
+- [x] (added) Admin should be able to delete organizations
 - [x] (added) User should be able to view the volunteering History
-- [ ] (added) Implement the About Us page (UI & Linikng)
+- [x] (added) Implement the About Us page (UI & Linikng)
 - [x] (added) Create the test file for all features (will add more tests in upcoming milestone)
 - [x] (added) Link the tests to Travis
+- [x] (added) Admin should be able to edit organization
+- [x] (added) User should be able to delete his account
+- [x] (added) Admin should be able to delete user
+- [x] (added) Deploy code on Heroku
+- [x] (added) Admin should be able to edit the organization opportunities
