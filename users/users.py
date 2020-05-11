@@ -56,10 +56,12 @@ def editUser(id):
 def deleteUser(id):
     if current_user.is_admin():
         user = User.query.filter_by(id=id).delete()
+        userOrgJobs = UserOrgJobs.query.filter_by(id=id).delete()
         db.session.commit()
         return redirect(url_for('admin.userList'))
     else:
         user = User.query.filter_by(id=id).delete()
+        userOrgJobs = UserOrgJobs.query.filter_by(id=id).delete()
         db.session.commit()
         return redirect(url_for('auth.logout'))
 
