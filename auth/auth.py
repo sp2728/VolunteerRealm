@@ -10,7 +10,6 @@ auth = Blueprint('auth', __name__, template_folder='templates')
 
 @auth.route('/login')
 def login():
-
     return render_template('login.html')
 
 
@@ -82,7 +81,7 @@ def forgotPassword_post():
     email = request.form.get('email')
     user = User.query.filter_by(email=email).first()
 
-    link = 'http://127.0.0.1:5000/resetPassword/' + str(user.id)
+    link = 'http://volunteerrealm.herokuapp.com/resetPassword/' + str(user.id)
     if user:
         msg = Message(subject="Password Reset Link",
                       sender=mail_settings["MAIL_USERNAME"],

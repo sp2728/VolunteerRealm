@@ -107,7 +107,7 @@ def editOrganization_post(id):
     org.org_address=organizationAddress;
     org.org_email=organizationEmail
     db.session.commit()
-    flash('Organisation Updated'+ org.org_name)
+    flash('Organisation Updated '+ org.org_name)
     return redirect(url_for('main.organizationList'))
 
 
@@ -153,7 +153,7 @@ def editOpportunity_post(id):
     job.job_description = jobDescription;
     job.job_location = jobLocation;
     db.session.commit()
-    flash('Opportunity Updated' + job.job_title)
+    flash('Opportunity Updated ' + job.job_title)
     return redirect(url_for('main.viewOpportunities'))
 
 

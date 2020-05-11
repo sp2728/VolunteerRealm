@@ -161,20 +161,32 @@ def test_logout(client):
 
 
 def test_user_creation(client):
+    data={'email': 'pat@gmail.com', 'password': 'xyz123','password2': 'xyz123', 'name': 'Pat2', 'FirstName': 'Pat', 'LastName': 'Stark',
+            'PhoneNumber': '9897969594', 'gender': 'Male', 'linkedIn': 'https://www.linkedin.com/'}
     # dummy data creation
-    data = {'email': 'pat@gmail.com', 'password': 'xyz123', 'name': 'Pat', 'first_name': 'Pat', 'last_name': 'Stark',
-            'phone_number': '9897969594', 'gender': 'Male', 'linkedIn': 'https://www.linkedin.com/'}
     rv = client.post(url_for('auth.signup'), data=data,
                      follow_redirects=True)
     assert rv.status_code == 200
+
     # dummy data login
     rv1 = client.post(url_for('auth.login'), data=data,
                       follow_redirects=True)
     assert rv1.status_code == 200
-    '''# edit profile
-    data1 = {'email': 'pat@gmail.com', 'name': 'Pat1', 'first_name': 'Patrename', 'last_name': 'Stark',
-             'phone_number': '9897969594', 'linkedIn': 'https://www.linkedin.com/'}
-    rv2 = client.post(url_for('user.editUser'), data=data1, follow_redirects=True)
+
+
+def test_edit(client):
+    rv = test_user_creation(client)
+    # edit profile
+    data1= {'email': 'pat@gmail.com', 'password': 'xyz123','password2': 'xyz123', 'name': 'Pat2', 'FirstName': 'Pat', 'LastName': 'Stark',
+             'PhoneNumber': '9897969594', 'gender': 'Male', 'linkedIn': 'https://www.linkedin.com/'}
+
+    rv2 = client.post(url_for('user.editUser', id=12), data=data1, follow_redirects=True)
     assert rv2.status_code == 200
-    assert b"Pat1" in rv2.data
-    # delete user'''
+    assert b"Pat2" in rv2.data
+
+
+def test_delete(client):
+    rv = test_user_creation(client)
+    # delete user
+    rv3 = client.get(url_for('user.deleteUser', id=12), follow_redirects=True)
+    assert rv3.status_code == 200
