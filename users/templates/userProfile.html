@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification alert alert-dark ">
+                {% for message in messages %}
+                    <div class="text-center text-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <div class="container p-5">
+
+    <div class="card cardspage">
+
+        <div class="card-body border-3 shadow">
+
+            <div>
+                <span class="float-left pt-2 h4"> Hi {{ users.name }}, </span>
+                <a class="btn float-right" data-toggle="modal" data-target="#delete" data-toggle="tooltip"
+                   data-placement="top" title="Delete Profile"><i class="fa fa-lg fa-trash text-danger"></i> </a>
+                <a class="btn float-right" data-toggle="modal" data-target="#edit" data-toggle="tooltip"
+                   data-placement="top" title="Edit Profile"><i class="fa fa-lg text-info fa-edit"></i> </a>
+
+            </div>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th colspan="3" scope="row">First Name:</th>
+                    <td>{{ users.first_name }}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="3" scope="row">Last Name:</th>
+                    <td>{{ users.last_name }}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="3" scope="row">Email:</th>
+                    <td>{{ users.email }}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="3" scope="row">Phone No:</th>
+                    <td>{{ users.phone_number }}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="3" scope="row">LinkedIn:</th>
+                    <td type="URL">{{ users.linkedIn }}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog"
+         aria-labelledby="deleteTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <br>
+                    <p> Are you sure your want to delete your Profile?</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="/deleteUser/{{ current_user.id }}">Yes</a>
+                    <a class="btn btn-warning" data-dismiss="modal">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog"
+         aria-labelledby="editTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/editUser/{{ current_user.id }}">
+                        <div class="form-group">
+                            <input class="form-control" type="email" name="email" value="{{ users.email }}"
+                                   autofocus="">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="name" value="{{ users.name }}" autofocus="">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="FirstName" value="{{ users.first_name }}">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="LastName" value="{{ users.last_name }}">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" type="number" name="PhoneNumber"
+                                   value="{{ users.phone_number }}">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" type="url" name="linkedIn"
+                                   value="{{ users.linkedIn }}">
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-primary float-right">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

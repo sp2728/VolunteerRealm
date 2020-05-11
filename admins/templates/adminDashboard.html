@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <hr>
+
+    <div class="container adminDashboard mb-5 mt-5">
+
+        <div class="row text-center">
+            <div class="col">
+                <a class="card text-decoration-none bg-warning" href="{{ url_for('main.organizationList') }}">
+                    <div class="card-body">
+                        <i class="fa icon fa-building text-dark mb-3"></i>
+                        <p> Organizations</p>
+
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a class="card text-decoration-none opportunities" href="{{ url_for('main.viewOpportunities') }}">
+                    <div class="card-body">
+                        <i class="fa icon fa-briefcase text-dark mb-3"></i>
+
+                        <p>Opportunities</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row text-center mt-5">
+            <div class="col"></div>
+            <div class="col-6">
+                <a class="card text-decoration-none users" href="{{ url_for('admin.userList') }}">
+                    <div class="card-body">
+                        <i class="fa icon fa-users text-dark mb-3"></i>
+                        <p>Users</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col"></div>
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

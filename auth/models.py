@@ -1,0 +1,54 @@
+import enum
+from flask_login import UserMixin
+from app import db
+
+
+class Permission(enum.Enum):
+    ADMIN = 1
+    USER = 2
+    NONE = 10  # can be used to disable users
+
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(64), unique=True)
+    first_name = db.Column(db.String(64))
+    last_name = db.Column(db.String(64))
+    phone_number = db.Column(db.String(15), unique=True)
+    linkedIn = db.Column(db.String(100))
+    gender = db.Column(db.String(10))
+    permission = db.Column(db.Enum(Permission), default=Permission.USER)
+
+    def is_admin(self):
+        return self.permission == Permission.ADMIN
+
+    def is_none(self):
+        return self.permission == Permission.NONE
+
+
+class Organization(db.Model):
+    org_id = db.Column(db.Integer, primary_key=True)
+    org_name = db.Column(db.String(100), unique=True)
+    org_address = db.Column(db.String(100))
+    org_email = db.Column(db.String(64))
+
+
+class OrgJobs(db.Model):
+    orgJob_id = db.Column(db.Integer, primary_key=True)
+    org_id = db.Column(db.Integer, db.ForeignKey('organization.org_id'))
+    job_id = db.Column(db.Integer, unique=True)
+    job_title = db.Column(db.String(100))
+    job_description = db.Column(db.String(2000))
+    job_location = db.Column(db.String(100))
+
+
+class UserOrgJobs(db.Model):
+    uoj_id = db.Column(db.Integer, primary_key=True)
+    orgJob_id = db.Column(db.Integer, db.ForeignKey('org_jobs.orgJob_id'))
+    id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    job_title = db.Column(db.String(100))
+    job_description = db.Column(db.String(2000))
+    job_location = db.Column(db.String(100))
+    org_name = db.Column(db.String(100))

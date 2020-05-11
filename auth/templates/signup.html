@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid  backpic  text-center">
+
+    <div class="card w-50 signup ">
+        <div class="card-header">
+            <h3><strong>Sign Up</strong></h3>
+        </div>
+        <div class="card-body">
+
+            <div class="box">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="notification text-danger">
+                    {{ messages[0] }}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <form method="POST" action="/signup">
+                    <div class="form-group">
+                        <input class="form-control" type="email" name="email" placeholder="Email" autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="name" placeholder="User Name" autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="password"  placeholder="Password">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="password2" placeholder="Confirm Password">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="FirstName" placeholder="FirstName">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="LastName" placeholder="LastName">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="number" name="PhoneNumber" placeholder="PhoneNumber">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="url" name="linkedIn" placeholder="Enter Your LinkedIn url">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="gender" value="Male">Male
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="gender" value="Female">Female
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="gender" value="Other">Other
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-lg">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

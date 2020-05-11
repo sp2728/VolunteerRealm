@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+    <hr>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification alert alert-dark ">
+                {% for message in messages %}
+                    <div class="text-center text-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+
+    <div class="container p-4">
+        <div class="card cardspage shadow">
+            <h2 class="text-center pt-3">
+                Opportunities
+                {% if current_user.is_authenticated and current_user.is_admin() %}
+                    <a class="btn btn-warning float-right mr-5 border" href="/addOpportunity"> Add Opportunity</a>
+                {% endif %}
+            </h2>
+            {% for orgJob in orgJobs %}
+                <hr>
+                <div class="row m-2">
+                    <div class="col">
+                        <h3>{{ orgJob.job_title }}</h3>
+                        <p><strong>Job Description: </strong>{{ orgJob.job_description }}</p>
+                        {% for org in orgs %}
+                            {% if orgJob.org_id == org.org_id %}
+                                <p><strong>Organization: </strong>{{ org.org_name }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p><strong>Location: </strong>{{ orgJob.job_location }}</p>
+                    </div>
+                    <div class="col-4 text-center pt-4">
+                        {% if (current_user.is_authenticated and not current_user.is_admin()) or (not current_user.is_authenticated) %}
+                            {% if orgJob.orgJob_id|string in jobs %}
+                                <a class="btn btn-info" disabled="disabled"> Applied</a>
+                            {% else %}
+                                <a class="btn btn-info" href="/applyOpportunity/{{ orgJob.orgJob_id }}"> Apply Now</a>
+                            {% endif %}
+                        {% endif %}
+                        {% if current_user.is_authenticated and current_user.is_admin() %}
+                            <a class="btn" href="/editOpportunity/{{ orgJob.orgJob_id }}" data-toggle="tooltip"
+                               data-placement="top" title="Edit"><i class="fa fa-lg text-info fa-edit"></i> </a>
+                            <a class="btn" href="/deleteOpportunity/{{ orgJob.orgJob_id }}" data-toggle="tooltip"
+                               data-placement="top" title="Delete"> <i class="fa fa-lg text-danger fa-trash"></i></a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
