@@ -1,10 +1,11 @@
+import base64
 import pytest
 from flask import url_for
 from app import db
-from auth.models import User
+from auth.models import User, Permission
 from flask_login import login_required, current_user
+from werkzeug.security import generate_password_hash
 from app import create_app
-
 
 @pytest.fixture
 def app():
@@ -159,9 +160,28 @@ def test_logout(client):
     assert b"Login" in rv1.data
     assert b"Sign Up" in rv1.data
 
+@pytest.fixture(scope='function')
+def user():
+    _user = User(
+        email='pat4@gmail.com',
+        name='Pat4',
+        password=generate_password_hash('xyz123', method='sha256'),
+        first_name='Pat4',
+        last_name='Stark1',
+        phone_number='9897969586',
+        gender='Male',
+        linkedIn='https://www.linkedin.com/',
+        permission=Permission.USER)
+    db.session.add(_user)
+    db.session.commit()
+    yield _user
+    db.session.refresh(_user)
+    db.session.delete(_user)
+    db.session.commit()
+
 
 def test_user_creation(client):
-    data={'email': 'pat@gmail.com', 'password': 'xyz123','password2': 'xyz123', 'name': 'Pat2', 'FirstName': 'Pat', 'LastName': 'Stark',
+    data={'email': 'pat@gmail.com', 'password': 'xyz123','password2': 'xyz123', 'name': 'Pat', 'FirstName': 'Pat', 'LastName': 'Stark',
             'PhoneNumber': '9897969594', 'gender': 'Male', 'linkedIn': 'https://www.linkedin.com/'}
     # dummy data creation
     rv = client.post(url_for('auth.signup'), data=data,
@@ -174,19 +194,55 @@ def test_user_creation(client):
     assert rv1.status_code == 200
 
 
-def test_edit(client):
-    rv = test_user_creation(client)
+def test_edit(client, user):
     # edit profile
-    data1= {'email': 'pat@gmail.com', 'password': 'xyz123','password2': 'xyz123', 'name': 'Pat2', 'FirstName': 'Pat', 'LastName': 'Stark',
-             'PhoneNumber': '9897969594', 'gender': 'Male', 'linkedIn': 'https://www.linkedin.com/'}
+    data1= {'email': 'pat6@gmail.com', "name": user.name}
+    # Authenticate client by login
+    rv1 = client.post(
+        url_for('auth.login'),
+        data={"name": user.name, "password": "xyz123"},
+        follow_redirects=True
+    )
 
-    rv2 = client.post(url_for('user.editUser', id=12), data=data1, follow_redirects=True)
+    # Call edit user end point
+    rv2 = client.post(url_for('user.editUser', id=user.id), data=data1, follow_redirects=True)
+
+    # Check if the status is 200
     assert rv2.status_code == 200
-    assert b"Pat2" in rv2.data
+
+    # Refresh user object to fetch the latest object from db
+    db.session.refresh(user)
+
+    assert user.email == "pat6@gmail.com"
+    assert b"Pat4" in rv2.data
 
 
-def test_delete(client):
-    rv = test_user_creation(client)
+@pytest.fixture(scope='function')
+def user1():
+        _user1 = User(
+            email='pat10@gmail.com',
+            name='Pat10',
+            password=generate_password_hash('xyz123', method='sha256'),
+            first_name='Pat10',
+            last_name='Stark10',
+            phone_number='9897969581',
+            gender='Male',
+            linkedIn='https://www.linkedin.com/',
+            permission=Permission.USER
+        )
+        db.session.add(_user1)
+        db.session.commit()
+        yield _user1
+        db.session.refresh(_user1)
+        db.session.commit()
+
+
+def test_delete(client, user1):
+    # delete profile
+    rv1 = client.post(url_for('auth.login'), data={'name': user1.name,'password':'xyz123'},
+                      follow_redirects=True)
+    assert rv1.status_code == 200
+
     # delete user
-    rv3 = client.get(url_for('user.deleteUser', id=12), follow_redirects=True)
+    rv3 = client.get(url_for('user.deleteUser', id=user1.id), follow_redirects=True)
     assert rv3.status_code == 200

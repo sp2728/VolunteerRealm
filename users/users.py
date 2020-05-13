@@ -47,7 +47,7 @@ def editUser(id):
     user.linkedIn = linkedIn
 
     db.session.commit()
-    flash('Profile Updated ' + user.name)
+    flash('Profile Updated ' + current_user.name)
     return redirect(url_for('user.userProfile'))
 
 
